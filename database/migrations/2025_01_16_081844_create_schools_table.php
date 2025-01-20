@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('schools', function (Blueprint $table) {
             $table->id();
+            $table->string('school_name');
+            $table->string('email')->unique();
+            $table->string('phone', 15);
+            $table->text('address')->nullable();
+            $table->enum('subscription_status',['active','inactive'])->default('inactive');
             $table->timestamps();
         });
     }
