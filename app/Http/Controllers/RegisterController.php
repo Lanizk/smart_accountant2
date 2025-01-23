@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Schools;
+use Auth;
 
 class RegisterController extends Controller
 {
@@ -40,5 +41,26 @@ class RegisterController extends Controller
         $user->save();
 
         
+    }
+
+
+    public function showLoginForm(){
+        return view('auth.login');
+    }
+
+    public function login(Request $request){
+        $request->validate([
+            'email'=>'email|required',
+            'password'=>'required|min:6'
+        ],[
+            'email.required'=>'email is required',
+            'password.min'=>'Password should have a minimum of 6 characters'
+        ]);
+
+        $remember=$request->has('remember');
+
+        if (Auth::attempt(['email'=>$request->email, 'password'=>$request->password],$remember)){
+
+        }
     }
 }

@@ -11,3 +11,6 @@ use App\Http\Controllers\RegisterController;
 Route::get('/register', [RegisterController::class, 'showRegistrationForm']);
 Route::post('/register', [RegisterController::class, 'register'])->name('register');
 
+Route::get('/', [RegisterController::class, 'showLoginForm']);
+Route::post('/', [RegisterController::class, 'login'])->name('login');
+

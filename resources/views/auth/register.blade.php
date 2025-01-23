@@ -1,4 +1,4 @@
-@include(layouts.header)
+@include('layouts.header')
 <body class="inner_page login">
 <div class="full_container">
    <div class="container">
@@ -38,16 +38,19 @@
                         <label for="password" class="label_field">Password</label>
                         <input type="password" id="password"  name="password" placeholder="Password" />
                      </div>
-                    
-                    
+                     <!-- <button type="submit" class="btn btn-primary">Register</button> -->
+                     <div class="field margin_0">
+                              <label class="label_field hidden">hidden label</label>
+                              <button class="main_bt">Sing In</button>
+                           </div>
                       
                   </fieldset>
-                  <button type="submit" class="btn btn-primary">Register</button>
+                  
                </form>
             </div>
          </div>
       </div>
    </div>
 </div>
-@include(layouts.footer);
+@include('layouts.footer')
 
