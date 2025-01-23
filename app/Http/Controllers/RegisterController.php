@@ -39,7 +39,7 @@ class RegisterController extends Controller
         $user->school_id = $school->id;
         
         $user->save();
-
+        return redirect()->route('dashboard')->with('success', 'School registered successfully!');
         
     }
 
@@ -60,7 +60,7 @@ class RegisterController extends Controller
         $remember=$request->has('remember');
 
         if (Auth::attempt(['email'=>$request->email, 'password'=>$request->password],$remember)){
-
+       return redirect()->route('dashboard')->with('success','welcome back');
         }
     }
 }
