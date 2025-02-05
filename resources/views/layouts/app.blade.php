@@ -24,37 +24,24 @@
                <div class="sidebar_blog_2">
                   <h4>General</h4>
                   <ul class="list-unstyled components">
-                     <li class="active">
-                        <a href="#dashboard" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-dashboard yellow_color"></i> <span>Dashboard</span></a>
-                        <ul class="collapse list-unstyled" id="dashboard">
-                           <li>
-                              <a href="dashboard.html">> <span>Default Dashboard</span></a>
-                           </li>
-                           <li>
-                              <a href="dashboard_2.html">> <span>Dashboard style 2</span></a>
-                           </li>
-                        </ul>
-                     </li>
-                     <!-- <li class="nav-item">
-               <a href="{{url('admin/admin/list')}}" class="nav-link  @if (Request::segment(2) == 'admin') active 
-                  @endif">
-                  <i class="fas fa-user-shield nav-icon"></i>
-
-                  <p>Admin</p>
-               </a>
-            </li> -->
+                  <li>
+                        <a href="{{url('/dashboard')}}" class="nav-link  @if (Request::segment(2) == 'dashboard') active 
+                     @endif">
+                     <i class="fa fa-dashboard yellow_color"></i> <span>Dashboard</span></a>
+                  </li>
+                  
                      <li>
-                        <a href="{{url('/student')}}" class="nav-link  @if (Request::segment(2) == 'admin') active 
+                        <a href="{{url('/student')}}" class="nav-link  @if (Request::segment(2) == 'student') active 
                      @endif">
                      <i class="fa fa-clock-o orange_color"></i> <span>Students</span></a>
-                  </li>
+                     </li>
                      <li>
-                        <a href="#element" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-diamond purple_color"></i> <span>Elements</span></a>
+                        <a href="#element" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-diamond purple_color"></i> <span>Fee Management</span></a>
                         <ul class="collapse list-unstyled" id="element">
-                           <li><a href="general_elements.html">> <span>General Elements</span></a></li>
-                           <li><a href="media_gallery.html">> <span>Media Gallery</span></a></li>
-                           <li><a href="icons.html">> <span>Icons</span></a></li>
-                           <li><a href="invoice.html">> <span>Invoice</span></a></li>
+                           <li><a href="general_elements.html">> <span>Class Fee</span></a></li>
+                           <li><a href="media_gallery.html">> <span>Other Fee</span></a></li>
+                           
+                           
                         </ul>
                      </li>
                      <li><a href="tables.html"><i class="fa fa-table purple_color2"></i> <span>Tables</span></a></li>
@@ -129,8 +116,11 @@
                   </nav>
                </div>
                <!-- end topbar -->
-              
-    @yield('main') <!-- Section where other pages inject content -->
+               <div class="midde_cont">
+               <div class="container-fluid"> 
+    @yield('main')
+</div>
+</div>
 
             </div>
          </div>

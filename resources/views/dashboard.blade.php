@@ -1,8 +1,7 @@
  <!-- dashboard inner -->
   @extends('layouts.app')
   @section('main')
- <div class="midde_cont">
-                  <div class="container-fluid">
+
                      <div class="row column_title">
                         <div class="col-md-12">
                            <div class="page_title">
@@ -352,7 +351,6 @@
                            Distributed By: <a href="https://themewagon.com/">ThemeWagon</a>
                         </p>
                      </div>
-                  </div>
-               </div>
+                
                @endsection
                <!-- end dashboard inner -->

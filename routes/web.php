@@ -19,7 +19,7 @@ Route::post('/', [RegisterController::class, 'login'])->name('login');
 Route::get('/dashboard', [DashboardController::class, 'showDashboard'])->name('dashboard');
 
 Route::get('/student', [StudentController::class, 'listStudents'])->name('list');
-// Route::get('/student', [DashboardController::class, 'addStudents'])->name('dashboard');
+ Route::get('/addstudent', [StudentController::class, 'addStudents'])->name('add');
 // Route::get('/student', [DashboardController::class, 'showDashboard'])->name('dashboard');
 // Route::get('/student', [DashboardController::class, 'showDashboard'])->name('dashboard');
 
