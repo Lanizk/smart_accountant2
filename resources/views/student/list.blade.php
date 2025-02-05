@@ -1,4 +1,5 @@
-@include('layouts.header')
+@extends('layouts.app')
+@section('main')
 <div class="col-md-12">
                            <div class="white_shd full margin_bottom_30">
                               <div class="full graph_head">
@@ -44,4 +45,4 @@
                               </div>
                            </div>
                         </div>
-                        @include('layouts.footer')
+                        @endsection
