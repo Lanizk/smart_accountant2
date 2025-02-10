@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\ClassController;
 
 Route::get('/register', [RegisterController::class, 'showRegistrationForm']);
 Route::post('/register', [RegisterController::class, 'register'])->name('register');
@@ -24,4 +25,11 @@ Route::get('/student', [StudentController::class, 'listStudents'])->name('list')
 // Route::get('/student', [DashboardController::class, 'showDashboard'])->name('dashboard');
 
 
+
+
+
+Route::get('/class', [ClassController::class, 'listClass'])->name('classlist');
+ Route::get('/addClass', [ClassController::class, 'addClass'])->name('addclass');
+// Route::get('/student', [DashboardController::class, 'showDashboard'])->name('dashboard');
+// Route::get('/student', [DashboardController::class, 'showDashboard'])->name('dashboard');
 

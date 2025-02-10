@@ -36,9 +36,9 @@
                      <i class="fa fa-clock-o orange_color"></i> <span>Students</span></a>
                      </li>
                      <li>
-                        <a href="#element" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-diamond purple_color"></i> <span>Fee Management</span></a>
+                        <a href="#" data-target="#element" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-diamond purple_color"></i> <span>Fee Management</span></a>
                         <ul class="collapse list-unstyled" id="element">
-                           <li><a href="general_elements.html">> <span>Class Fee</span></a></li>
+                           <li><a href="/class">> <span>Class Fee</span></a></li>
                            <li><a href="media_gallery.html">> <span>Other Fee</span></a></li>
                            
                            
@@ -118,10 +118,11 @@
                <!-- end topbar -->
                <div class="midde_cont">
                <div class="container-fluid"> 
-    @yield('main')
-</div>
-</div>
+               @yield('main')
+               </div>
+               </div>
 
             </div>
          </div>
       </div>
+      @include('layouts.footer')
