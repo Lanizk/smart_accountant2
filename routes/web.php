@@ -21,6 +21,7 @@ Route::get('/dashboard', [DashboardController::class, 'showDashboard'])->name('d
 
 Route::get('/student', [StudentController::class, 'listStudents'])->name('list');
  Route::get('/addstudent', [StudentController::class, 'addStudents'])->name('add');
+//  Route::get('/addstudent', [StudentController::class, 'addStu'])->name('add');
 // Route::get('/student', [DashboardController::class, 'showDashboard'])->name('dashboard');
 // Route::get('/student', [DashboardController::class, 'showDashboard'])->name('dashboard');
 
@@ -29,7 +30,8 @@ Route::get('/student', [StudentController::class, 'listStudents'])->name('list')
 
 
 Route::get('/class', [ClassController::class, 'listClass'])->name('classlist');
- Route::get('/addClass', [ClassController::class, 'addClass'])->name('addclass');
+Route::get('/addClass', [ClassController::class, 'addClass'])->name('addclass');
+Route::post('/addClass', [ClassController::class, 'insert'])->name('insertclass');
 // Route::get('/student', [DashboardController::class, 'showDashboard'])->name('dashboard');
 // Route::get('/student', [DashboardController::class, 'showDashboard'])->name('dashboard');
 
