@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('extrafees', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('school_id')->constrained('schools')->onDelete('cascade');
+            
             $table->String('name');
             $table->String('term');
             $table->decimal('Amount',10,2);

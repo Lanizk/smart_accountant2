@@ -9,12 +9,18 @@ class Classmodel extends Model
     use HasFactory;
     protected $table='classmodels';
 
+
+
+    public function extraFee()
+    {
+      return $this->belongsToMany(extrafee::class,'extrafee_class');
+    }
+
     static public function getRecord(){
         $return=Classmodel::select('classmodels.*');
-        $return = $return
-        ->orderBy('classmodels.id', 'desc')
+        $return = $return->orderBy('classmodels.id', 'desc')
         ->paginate(20);
-    return $return;
+        return $return;
     }
     
 }

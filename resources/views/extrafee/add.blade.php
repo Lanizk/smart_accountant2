@@ -1,40 +1,66 @@
 @extends('layouts.app')
-@section('main')
 
+@section('main')
 <div class="row">
     <!-- Form Section -->
     <div class="col-md-12 mt-5">
         <div class="white_shd full margin_bottom_30">
             <div class="full graph_head">
                 <div class="heading1 margin_0">
-                    <h2>Application Form</h2>
+                    <h2>Add Extra Fee</h2>
                 </div>
             </div>
             <div class="padding_infor_info">
-                <form action="{{ route('insertclass') }}" method="post" enctype="multipart/form-data">
-                @csrf
+                <form action="{{ route('extra-fees.store') }}" method="POST">
+                    @csrf
                     <div class="form-group">
-                        <label for="name">Class Name:</label>
+                        <label for="name">Fee Name:</label>
                         <input type="text" id="name" name="name" class="form-control" required>
                     </div>
 
                     <div class="form-group">
                         <label for="term">Term:</label>
-                        <input type="text" id="term" name="term" class="form-control" required>
+                        <select id="term" name="term" class="form-control">
+                            <option value="Term 1">Term 1</option>
+                            <option value="Term 2">Term 2</option>
+                            <option value="Term 3">Term 3</option>
+                        </select>
                     </div>
 
                     <div class="form-group">
-                        <label for="Amount">Amount:</label>
-                        <input type="number" id="Amount" name="Amount" class="form-control" required>
+                        <label for="amount">Amount:</label>
+                        <input type="number" id="amount" name="amount" class="form-control" step="0.01" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="entireSchoolCheckbox" name="for_entire_school" value="1">
+                            Apply to Entire School
+                        </label>
+                    </div>
+
+                    <div class="form-group" id="classSelection">
+                        <label for="class_ids">Select Classes:</label>
+                        <select id="class_ids" name="class_ids[]" class="form-control" multiple>
+                            @foreach($classes as $class)
+                                <option value="{{ $class->id }}">{{ $class->name }}</option>
+                            @endforeach
+                        </select>
                     </div>
 
                     <div class="form-group text-center">
-                        <button type="submit" class="btn btn-success">Submit Application</button>
+                        <button type="submit" class="btn btn-success">Add Fee</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    document.getElementById('entireSchoolCheckbox').addEventListener('change', function() {
+        document.getElementById('classSelection').style.display = this.checked ? 'none' : 'block';
+    });
+</script>
 
 @endsection

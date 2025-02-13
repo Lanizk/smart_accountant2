@@ -16,5 +16,9 @@ class extrafee extends Model
       }
 
        // Relationship: ExtraFee belongs to many Classes (only if for_entire_school = false)
+       public function classes()
+       {
+        return $this->belongstoMany(Classmodel::class,'extrafee_class');
+       }
        
 }
