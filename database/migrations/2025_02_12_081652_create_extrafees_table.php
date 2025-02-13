@@ -16,6 +16,7 @@ return new class extends Migration
             $table->String('name');
             $table->String('term');
             $table->decimal('Amount',10,2);
+            $table->boolean('for_entire_school')->default(false);
             $table->timestamps();
         });
     }

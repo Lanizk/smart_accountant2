@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('extrafeeclasses', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('extrafee_id')->constrained('extrafees')->onDelete('cascade'); // Links to extra fee
+            $table->foreignId('classmodels_id')->constrained('classmodels')->onDelete('cascade');
             $table->timestamps();
         });
     }
