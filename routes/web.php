@@ -18,6 +18,8 @@ Route::post('/register', [RegisterController::class, 'register'])->name('registe
 Route::get('/', [RegisterController::class, 'showLoginForm']);
 Route::post('/', [RegisterController::class, 'login'])->name('login');
 
+
+Route::group(['middleware' => 'school'], function () {
 Route::get('/dashboard', [DashboardController::class, 'showDashboard'])->name('dashboard');
 
 Route::get('/student', [StudentController::class, 'listStudents'])->name('list');
@@ -42,3 +44,4 @@ Route::get('/addextrafee', [extraFeeController::class, 'add'])->name('extrafeead
 Route::post('/extrafee', [extraFeeController::class, 'insert'])->name('extrafeeinsert');
 // Route::get('/student', [DashboardController::class, 'showDashboard'])->name('dashboard');
 // Route::get('/student', [DashboardController::class, 'showDashboard'])->name('dashboard');
+});

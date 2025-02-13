@@ -22,5 +22,10 @@ class Classmodel extends Model
         ->paginate(20);
         return $return;
     }
+
+    static public function getClass(){
+      $return=classModel::all();
+      return $return;
+    }
     
 }

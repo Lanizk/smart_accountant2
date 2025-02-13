@@ -39,7 +39,7 @@
                         <a href="#" data-target="#element" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-diamond purple_color"></i> <span>Fee Management</span></a>
                         <ul class="collapse list-unstyled" id="element">
                            <li><a href="/class">> <span>Class Fee</span></a></li>
-                           <li><a href="'/extrafee">> <span>Other Fee</span></a></li>
+                           <li><a href="/extrafee"> <span>Other Fee</span></a></li>
                            
                            
                         </ul>

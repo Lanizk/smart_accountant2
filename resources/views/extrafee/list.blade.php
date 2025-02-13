@@ -28,17 +28,7 @@
                         <th>Amount</th>
                      </tr>
                   </thead>
-                  <tbody>
-                     @foreach($getRecord as $value)
-                     <tr>
-                        <td>{{$value->id}}</td>
-                        <td>{{$value->name}}</td>
-                        <td>{{$value->term}}</td>
-                        <td>{{$value->Amount}}</td>
-                     </tr>
-                     @endforeach
-                  </tbody>
-               </table>
+                 
             </div>
          </div>
       </div>

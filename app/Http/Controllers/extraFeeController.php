@@ -1,19 +1,25 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\User;
+use App\Models\extrafee;
+use App\Models\Classmodel;
+use App\Models\Schools;
+use Auth;
 use Illuminate\Http\Request;
+
 
 class extraFeeController extends Controller
 {
 
     public function list(){
-        $data['getRecord'] = extrafee::getRecord();
-        return view('extrafee.list',$data);
+       
+        return view('extrafee.list',);
     }
 
     public function add(){
-        return view('extrafee.add');
+        $data['classes'] = Classmodel::getClass();
+        return view('extrafee.add',$data);
     }
 
 
@@ -36,10 +42,12 @@ class extraFeeController extends Controller
         'term'=>$request->term,
         'for_entire_school'=>$request->for_entire_school,
     ]);
+    
 
-    if(!request->for_entire_school && !empty($request->classmodels_id))
+
+    if(!$request->for_entire_school && !empty($request->classmodels_id))
     {
-        $extraFee->clases()->attach($request->classmodels_id);
+        $extraFee->classes()->attach($request->classmodels_id);
     }
 }
 }

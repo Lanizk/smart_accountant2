@@ -11,7 +11,7 @@
                 </div>
             </div>
             <div class="padding_infor_info">
-                <form action="{{ route('extra-fees.store') }}" method="POST">
+                <form action="{{ route('extrafeeinsert') }}" method="POST">
                     @csrf
                     <div class="form-group">
                         <label for="name">Fee Name:</label>
@@ -40,8 +40,8 @@
                     </div>
 
                     <div class="form-group" id="classSelection">
-                        <label for="class_ids">Select Classes:</label>
-                        <select id="class_ids" name="class_ids[]" class="form-control" multiple>
+                        <label for="classmodels_id">Select Classes:</label>
+                        <select id="classmodels_id" name="classmodels_id[]" class="form-control" multiple>
                             @foreach($classes as $class)
                                 <option value="{{ $class->id }}">{{ $class->name }}</option>
                             @endforeach
