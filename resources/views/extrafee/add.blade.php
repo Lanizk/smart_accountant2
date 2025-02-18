@@ -34,6 +34,7 @@
 
                     <div class="form-group">
                         <label>
+                             <input type="hidden" name="for_entire_school" value="0">
                             <input type="checkbox" id="entireSchoolCheckbox" name="for_entire_school" value="1">
                             Apply to Entire School
                         </label>

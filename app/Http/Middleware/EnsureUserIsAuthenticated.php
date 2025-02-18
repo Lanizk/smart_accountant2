@@ -21,5 +21,7 @@ class EnsureUserIsAuthenticated
         }
 
         return $next($request);
+
+       
     }
 }
