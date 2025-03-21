@@ -1,67 +1,100 @@
 @extends('layouts.app')
-
 @section('main')
-<div class="row">
-    <!-- Form Section -->
-    <div class="col-md-12 mt-5">
-        <div class="white_shd full margin_bottom_30">
-            <div class="full graph_head">
-                <div class="heading1 margin_0">
-                    <h2>Add Extra Fee</h2>
-                </div>
-            </div>
-            <div class="padding_infor_info">
-                <form action="{{ route('extrafeeinsert') }}" method="POST">
-                    @csrf
-                    <div class="form-group">
-                        <label for="name">Fee Name:</label>
-                        <input type="text" id="name" name="name" class="form-control" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="term">Term:</label>
-                        <select id="term" name="term" class="form-control">
-                            <option value="Term 1">Term 1</option>
-                            <option value="Term 2">Term 2</option>
-                            <option value="Term 3">Term 3</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="amount">Amount:</label>
-                        <input type="number" id="amount" name="amount" class="form-control" step="0.01" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label>
-                             <input type="hidden" name="for_entire_school" value="0">
-                            <input type="checkbox" id="entireSchoolCheckbox" name="for_entire_school" value="1">
-                            Apply to Entire School
-                        </label>
-                    </div>
-
-                    <div class="form-group" id="classSelection">
-                        <label for="classmodels_id">Select Classes:</label>
-                        <select id="classmodels_id" name="classmodels_id[]" class="form-control" multiple>
-                            @foreach($classes as $class)
-                                <option value="{{ $class->id }}">{{ $class->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div class="form-group text-center">
-                        <button type="submit" class="btn btn-success">Add Fee</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+<form action="{{ route('extrafeeinsert') }}" method="POST">
+    @csrf
+    <div class="form-group">
+        <label for="name">Fee Name:</label>
+        <input type="text" id="name" name="name" class="form-control" required>
     </div>
-</div>
+
+    <div class="form-group">
+        <label for="term">Term:</label>
+        <select id="term" name="term" class="form-control">
+            <option value="Term 1">Term 1</option>
+            <option value="Term 2">Term 2</option>
+            <option value="Term 3">Term 3</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="fee_type">Fee Type:</label>
+        <select id="fee_type" name="fee_type" class="form-control">
+            <option value="fixed">Fixed</option>
+            <option value="quantity_based">Quantity-Based</option>
+        </select>
+    </div>
+
+    <!-- Unit Price Field (for quantity-based fees) -->
+    <div class="form-group" id="unitPriceContainer" style="display: none;">
+        <label for="unit_price">Rate per Unit (e.g., per km):</label>
+        <input type="number" id="unit_price" name="unit_price" class="form-control" step="0.01">
+    </div>
+
+    <div class="form-group">
+        <label for="studentSearch">Search Students:</label>
+        <input type="text" id="studentSearch" class="form-control" placeholder="Search by name...">
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Select</th>
+                <th>Student Name</th>
+                <th>Quantity (if applicable e.g. Distance in KM)</th>
+                <th>Total Fee</th>
+            </tr>
+        </thead>
+        
+    </table>
+
+    <div class="form-group text-center">
+        <button type="submit" class="btn btn-success">Add Fee</button>
+    </div>
+</form>
 
 <script>
-    document.getElementById('entireSchoolCheckbox').addEventListener('change', function() {
-        document.getElementById('classSelection').style.display = this.checked ? 'none' : 'block';
+    document.getElementById('fee_type').addEventListener('change', function() {
+        let unitPriceContainer = document.getElementById('unitPriceContainer');
+        let unitPriceInput = document.getElementById('unit_price');
+        let isQuantityBased = this.value === 'quantity_based';
+
+        unitPriceContainer.style.display = isQuantityBased ? 'block' : 'none';
+        unitPriceInput.value = isQuantityBased ? unitPriceInput.value : ''; 
+    });
+
+    document.querySelectorAll('.student-checkbox').forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            let row = this.closest('tr');
+            let quantityInput = row.querySelector('.quantity-input');
+            let totalFeeInput = row.querySelector('.total-fee');
+
+            if (this.checked) {
+                quantityInput.removeAttribute('disabled');
+            } else {
+                quantityInput.setAttribute('disabled', 'true');
+                quantityInput.value = '';
+                totalFeeInput.value = '';
+            }
+        });
+    });
+
+    document.querySelectorAll('.quantity-input').forEach(input => {
+        input.addEventListener('input', function() {
+            let row = this.closest('tr');
+            let totalFeeInput = row.querySelector('.total-fee');
+            let unitPrice = parseFloat(document.getElementById('unit_price').value) || 0;
+            let quantity = parseFloat(this.value) || 0;
+
+            totalFeeInput.value = (quantity * unitPrice).toFixed(2);
+        });
+    });
+
+    document.getElementById('studentSearch').addEventListener('input', function() {
+        let searchValue = this.value.toLowerCase();
+        document.querySelectorAll('#studentTable tr').forEach(row => {
+            let studentName = row.children[1].textContent.toLowerCase();
+            row.style.display = studentName.includes(searchValue) ? '' : 'none';
+        });
     });
 </script>
-
 @endsection

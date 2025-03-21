@@ -35,8 +35,10 @@
                      <tr>
                         <td>{{$value->id}}</td>
                         <td>{{$value->name}}</td>
-                        <td>{{$value->term}}</td>
-                        <td>{{$value->Amount}}</td>
+                        <td>{{$value->phone}}</td>
+                        <td>{{$value->admission_no}}</td>
+                        <td>{{$value->gender}}</td>
+                        <td>{{$value->classmodel->name}}</td>
                      </tr>
                      @endforeach
                   </tbody>

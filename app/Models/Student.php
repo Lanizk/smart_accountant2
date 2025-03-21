@@ -12,7 +12,11 @@ class Student extends Model
         'name', 'phone', 'admission_number', 'gender', 'class_id'
     ];
 
-    public function class(){
+    public function classmodel(){
         return $this->belongsTo(classmodel::class,'class_id');
+    }
+
+    public static function getRecord(){
+        return self::with('classmodel')->orderBy('id','desc')->get();
     }
 }

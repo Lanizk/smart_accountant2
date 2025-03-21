@@ -9,7 +9,8 @@ use Illuminate\Validation\Rule;
 class StudentController extends Controller
 {
     public function listStudents(){
-        return view('student.list');
+        $data['getRecord'] = student::getRecord();
+        return view('student.list',$data);
     }
 
     public function addStudents(){
