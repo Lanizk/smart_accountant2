@@ -8,7 +8,7 @@ use App\Models\Scopes\SchoolScope;
 class extrafee extends Model
 {
     use HasFactory;
-    protected $fillable=['school_id','name','term','amount','for_entire_school'];
+    protected $fillable=['school_id','name', 'fee_type', 'unit_price', 'term_id'];
 
     protected static function booted()
     {
@@ -21,10 +21,9 @@ class extrafee extends Model
         return $this->belongsTo(schools::classmodel);
       }
 
-       // Relationship: ExtraFee belongs to many Classes (only if for_entire_school = false)
-       public function classes()
-       {
-        return $this->belongstoMany(Classmodel::class,'extrafeeclasses');
-       }
+      public  function term(){
+        return $this->belonsTo(Term::class);
+      }
+
        
 }
