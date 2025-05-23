@@ -11,10 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('extrafeeclasses', function (Blueprint $table) {
+        Schema::create('extra_fee_student', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('school_id')->constrained('schools')->onDelete('cascade');
             $table->foreignId('extrafee_id')->constrained('extrafees')->onDelete('cascade'); // Links to extra fee
-            $table->foreignId('classmodels_id')->constrained('classmodels')->onDelete('cascade');
+            $table->foreignId('student_id')->constrained('students')->onDelete('cascade');
+            $table->decimal('quantity',8,2);
+            $table->decimal('total_fee',8,2);
             $table->timestamps();
         });
     }

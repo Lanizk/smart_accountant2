@@ -35,7 +35,7 @@
         <input type="text" id="studentSearch" class="form-control" placeholder="Search by name...">
     </div>
 
-    <table class="table">
+    <table class="table" id="studentTable">
         <thead>
             <tr>
                 <th>Select</th>

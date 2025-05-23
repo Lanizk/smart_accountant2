@@ -8,7 +8,7 @@ use App\Models\Scopes\SchoolScope;
 class Classmodel extends Model
 {
     use HasFactory;
-    protected $table='classmodels';
+    protected $table='classes';
 
     protected static function booted()
     {

@@ -14,11 +14,10 @@ return new class extends Migration
         Schema::create('extrafees', function (Blueprint $table) {
             $table->id();
             $table->foreignId('school_id')->constrained('schools')->onDelete('cascade');
-            
             $table->String('name');
-            $table->String('term');
-            $table->decimal('Amount',10,2);
-            $table->boolean('for_entire_school');
+            $table->enum('fee_type',['fixed','quantity_based']);
+            $table->decimal('unit_price',10,2)->nullable();
+            $table->foreighnId('term_id')->constrained('terms')->onDelete('cascade');
             $table->timestamps();
         });
     }
