@@ -24,7 +24,7 @@ class extrafee extends Model
       public  function term(){
         return $this->belonsTo(Term::class);
       }
- public  function Twoterm(){
+ public  function Twoter3m(){
         return $this->belonsTo(Term::class);
       }
        
