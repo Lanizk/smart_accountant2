@@ -18,15 +18,7 @@
                         <input type="text" id="name" name="name" class="form-control" required>
                     </div>
 
-                    <div class="form-group">
-                        <label for="term">Term:</label>
-                        <input type="text" id="term" name="term" class="form-control" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="Amount">Amount:</label>
-                        <input type="number" id="Amount" name="Amount" class="form-control" required>
-                    </div>
+                   
 
                     <div class="form-group text-center">
                         <button type="submit" class="btn btn-success">Submit Application</button>

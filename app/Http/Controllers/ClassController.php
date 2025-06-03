@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Classmodel;
+use App\Models\Classes;
 
 class ClassController extends Controller
 {
   
     public function listClass(){
-        $data['getRecord'] = Classmodel::getRecord();
+        $data['getRecord'] = Classes::getRecord();
         return view('class.list',$data);
     }
 
@@ -21,10 +21,8 @@ class ClassController extends Controller
 
         $schoolId = auth()->user()->school_id; 
 
-        $save=new Classmodel;
+        $save=new Classes;
         $save->name=$request->name;
-        $save->Term=$request->term;
-        $save->Amount=$request->Amount;
         $save->school_id = $schoolId;
         $save->save();
         return redirect()->route('classlist')->with('success', "Class successfully Created");
