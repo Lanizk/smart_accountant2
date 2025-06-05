@@ -15,11 +15,12 @@ use App\Http\Controllers\extraFeeController;
 Route::get('/register', [RegisterController::class, 'showRegistrationForm']);
 Route::post('/register', [RegisterController::class, 'register'])->name('register');
 
-Route::get('/', [RegisterController::class, 'showLoginForm']);
-Route::post('/', [RegisterController::class, 'login'])->name('login');
+Route::get('/login', [RegisterController::class, 'showLoginForm']);
+Route::post('/login', [RegisterController::class, 'login'])->name('login');
 
 
 Route::group(['middleware' => 'school'], function () {
+
 Route::get('/dashboard', [DashboardController::class, 'showDashboard'])->name('dashboard');
 
 Route::get('/student', [StudentController::class, 'listStudents'])->name('list');

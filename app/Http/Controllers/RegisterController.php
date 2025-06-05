@@ -60,7 +60,8 @@ class RegisterController extends Controller
         $remember=$request->has('remember');
 
         if (Auth::attempt(['email'=>$request->email, 'password'=>$request->password],$remember)){
-       return redirect()->route('dashboard')->with('success','welcome back');
+    //    return redirect()->route('dashboard')->with('success','welcome back');
+       return redirect()->view('try')->with('success','welcome back');
         }
     }
 }
