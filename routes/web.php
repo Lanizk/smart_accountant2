@@ -19,7 +19,7 @@ Route::get('/login', [RegisterController::class, 'showLoginForm']);
 Route::post('/login', [RegisterController::class, 'login'])->name('login');
 
 
-Route::group(['middleware' => 'school'], function () {
+ Route::group(['middleware' => 'school'], function () {
 
 Route::get('/dashboard', [DashboardController::class, 'showDashboard'])->name('dashboard');
 
@@ -37,6 +37,9 @@ Route::get('/student', [StudentController::class, 'listStudents'])->name('list')
 Route::get('/class', [ClassController::class, 'listClass'])->name('classlist');
 Route::get('/addClass', [ClassController::class, 'addClass'])->name('addclass');
 Route::post('/addClass', [ClassController::class, 'insert'])->name('insertclass');
+Route::post('/editClass/{id}', [ClassController::class, 'edit'])->name('editclass');
+Route::get('/editClass/{id}', [ClassController::class, 'update'])->name('updateclass');
+Route::get('/deleteClass/{id}', [ClassController::class, 'delete'])->name('deleteclass');
 // Route::get('/student', [DashboardController::class, 'showDashboard'])->name('dashboard');
 // Route::get('/student', [DashboardController::class, 'showDashboard'])->name('dashboard');
 

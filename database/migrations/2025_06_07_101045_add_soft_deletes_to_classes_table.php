@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('classes', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('school_id')->constrained('schools')->onDelete('cascade');
-            $table->string('name');
-           
-            $table->timestamps();
+        Schema::table('classes', function (Blueprint $table) {
+            
+         $table->softDeletes();
         });
     }
 
@@ -25,6 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('classmodels');
+        Schema::table('classes', function (Blueprint $table) {
+            //
+        });
     }
 };

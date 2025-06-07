@@ -38,13 +38,13 @@
                      <li>
                         <a href="#" data-target="#element" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-diamond purple_color"></i> <span>Fee Management</span></a>
                         <ul class="collapse list-unstyled" id="element">
-                           <li><a href="/class">> <span>Class Fee</span></a></li>
+                           <li><a href="/class"> <span>Class Fee</span></a></li>
                            <li><a href="/extrafee"> <span>Other Fee</span></a></li>
                            
                            
                         </ul>
                      </li>
-                     <li><a href="tables.html"><i class="fa fa-table purple_color2"></i> <span>Tables</span></a></li>
+                     <!-- <li><a href="tables.html"><i class="fa fa-table purple_color2"></i> <span>Tables</span></a></li>
                      <li>
                         <a href="#apps" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-object-group blue2_color"></i> <span>Apps</span></a>
                         <ul class="collapse list-unstyled" id="apps">
@@ -77,7 +77,7 @@
                      </li>
                      <li><a href="map.html"><i class="fa fa-map purple_color2"></i> <span>Map</span></a></li>
                      <li><a href="charts.html"><i class="fa fa-bar-chart-o green_color"></i> <span>Charts</span></a></li>
-                     <li><a href="settings.html"><i class="fa fa-cog yellow_color"></i> <span>Settings</span></a></li>
+                     <li><a href="settings.html"><i class="fa fa-cog yellow_color"></i> <span>Settings</span></a></li> -->
                   </ul>
                </div>
             </nav>
@@ -115,7 +115,7 @@
                      </div>
                   </nav>
                </div> 
-               <!-- end topbar -->s
+               <!-- end topbar -->
                <div class="midde_cont">
                <div class="container-fluid"> 
                @yield('main')
