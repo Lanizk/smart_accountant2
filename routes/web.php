@@ -11,6 +11,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\ClassController;
 use App\Http\Controllers\extraFeeController;
+use App\Http\Controllers\TermController;
 
 Route::get('/register', [RegisterController::class, 'showRegistrationForm']);
 Route::post('/register', [RegisterController::class, 'register'])->name('register');
@@ -49,4 +50,12 @@ Route::get('/addextrafee', [extraFeeController::class, 'add'])->name('extrafeead
 Route::post('/extrafee', [extraFeeController::class, 'insert'])->name('extrafeeinsert');
 // Route::get('/student', [DashboardController::class, 'showDashboard'])->name('dashboard');
 // Route::get('/student', [DashboardController::class, 'showDashboard'])->name('dashboard');
+
+
+Route::get('/term', [TermController::class, 'listTerm'])->name('termlist');
+Route::get('/addterm', [TermController::class, 'addTerm'])->name('addterm');
+Route::post('/addterm', [TermController::class, 'insertTerm'])->name('insertterm');
+Route::post('/editterm/{id}', [TermController::class, 'editterm'])->name('editterm');
+Route::get('/editterm/{id}', [TermController::class, 'updateterm'])->name('updateterm');
+Route::get('/deleteterm/{id}', [TermController::class, 'delete'])->name('deleteterm');
 });

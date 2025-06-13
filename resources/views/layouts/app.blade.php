@@ -36,10 +36,10 @@
                      <i class="fa fa-clock-o orange_color"></i> <span>Students</span></a>
                      </li>
                      <li>
-                        <a href="#" data-target="#element" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-diamond purple_color"></i> <span>Fee Management</span></a>
+                        <a href="#" data-target="#element" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-diamond purple_color"></i> <span>Level</span></a>
                         <ul class="collapse list-unstyled" id="element">
-                           <li><a href="/class"> <span>Class Fee</span></a></li>
-                           <li><a href="/extrafee"> <span>Other Fee</span></a></li>
+                           <li><a href="/class"> <span>Class Level</span></a></li>
+                           <li><a href="/term"> <span>Term Level</span></a></li>
                            
                            
                         </ul>
