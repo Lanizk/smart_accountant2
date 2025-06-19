@@ -28,6 +28,11 @@ class Classes extends Model
         return self::find($id);
     }
 
+     public function students(){
+
+        return $this->hasMany(Student::class);
+    }
+
     
     
     

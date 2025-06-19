@@ -1,20 +1,9 @@
 @extends('layouts.app')
 @section('main')
-<div class="row column_title">
-<div class="col-md-12">
-   <div class="col-md-12">
-   <div class="d-flex justify-content-end align-items-center py-3 px-4 white_shd border rounded mb-3 mt-3">
-    
-   <a href="{{ route('add') }}" class="btn btn-success px-4 py-2 fw-bold">Add Student</a>
-   
-   </div>
-</div>
-</div>
-</div>
-@include('_message')
+
 <div class="row">
     <!-- Form Section -->
-    <div class="col-md-12">
+    <div class="col-md-12 mt-5">
         <div class="white_shd full margin_bottom_30">
             <div class="full graph_head">
                 <div class="heading1 margin_0">
@@ -22,7 +11,7 @@
                 </div>
             </div>
             <div class="padding_infor_info">
-                <form action="{{ route('student.insert') }}"  method="post" enctype="multipart/form-data">
+                 <form action="{{ route('insertStudents') }}"  method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <label for="name">Full Name:</label>

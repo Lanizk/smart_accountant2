@@ -5,7 +5,7 @@
    <div class="col-md-12">
    <div class="d-flex justify-content-end align-items-center py-3 px-4 white_shd border rounded mb-3 mt-3">
     
-   <a href="{{ route('addclass') }}" class="btn btn-success px-4 py-2 fw-bold">+ Add New</a>
+   <a href="{{ route('addStudents') }}" class="btn btn-success px-4 py-2 fw-bold">+ Add New</a>
    </div>
 </div>
 </div>
@@ -28,6 +28,7 @@
                         <th>Admission No</th>
                         <th>Gender</th>
                         <th>Class</th>
+                        <th>Term</th>
                      </tr>
                   </thead>
                   <tbody>
