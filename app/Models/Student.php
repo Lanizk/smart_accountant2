@@ -28,6 +28,10 @@ class Student extends Model
         return self::all();
     }
 
+    public static function getSingleStudent($id){
+        return self::find($id);
+    }
+
     public function class(){
 
         return $this->belongsTo(Classes::class);

@@ -1,5 +1,18 @@
 @extends('layouts.app')
 @section('main')
+
+@if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
+@if (session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
+
 <div class="row column_title">
 <div class="col-md-12">
    <div class="col-md-12">
@@ -14,10 +27,10 @@
       <div class="white_shd full margin_bottom_30">
          <div class="full graph_head">
             <div class="heading1 margin_0">
-               <h2>Responsive Tables</h2>
+               <h2>Student List</h2>
             </div>
          </div>
-         <div class="table_section padding_infor_info">
+         
             <div class="table-responsive-lg">
                <table class="table">
                   <thead>
@@ -29,6 +42,7 @@
                         <th>Gender</th>
                         <th>Class</th>
                         <th>Term</th>
+                        <th>Action</th>
                      </tr>
                   </thead>
                   <tbody>
@@ -37,9 +51,16 @@
                         <td>{{$value->id}}</td>
                         <td>{{$value->name}}</td>
                         <td>{{$value->phone}}</td>
-                        <td>{{$value->admission_no}}</td>
+                        <td>{{$value->admission}}</td>
                         <td>{{$value->gender}}</td>
-                        <td>{{$value->classmodel->name}}</td>
+                        <td>{{$value->class->name}}</td>
+                        <td>{{$value->term->name}}</td>
+                        <td style="min-width: 150px;">
+                                      <a href="{{url('/editstudent/' . $value->id)}}"
+                                         class="btn btn-primary btn-sm">Edit</a>
+                                      <a href="{{url('/deletestudent/' . $value->id)}}"
+                                         class="btn btn-danger btn-sm">Delete</a>
+                                   </td>
                      </tr>
                      @endforeach
                   </tbody>
@@ -47,6 +68,6 @@
             </div>
          </div>
       </div>
-   </div>
+   
 </div>
                         @endsection

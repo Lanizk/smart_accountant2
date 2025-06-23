@@ -1,6 +1,18 @@
 @extends('layouts.app')
 @section('main')
 
+
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+
 <div class="row">
     <!-- Form Section -->
     <div class="col-md-12 mt-5">
@@ -24,8 +36,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="phone">Admission Number:</label>
-                        <input type="tel" id="admission_no" name="admission_no" value="{{ old('admission_no') }}" class="form-control" required>
+                        <label for="admission">Admission Number:</label>
+                        <input type="text" id="admission" name="admission" value="{{ old('admission') }}" class="form-control" required>
                     </div>
                     <div class="form-group mb-3">
                         <label for="gender">Gender:</label>
@@ -53,6 +65,23 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+
+
+                    <div class="form-group mb-3">
+    <label for="term_id">Term:</label>
+    <select id="term_id" name="term_id" class="form-control @error('term_id') is-invalid @enderror" required>
+        <option value="">Select Term</option>
+        @foreach($terms as $term)
+            <option value="{{ $term->id }}" {{ old('term_id') == $term->id ? 'selected' : '' }}>
+                {{ $term->name }}
+            </option>
+        @endforeach
+    </select>
+    @error('term_id')
+        <div class="invalid-feedback">{{ $message }}</div>
+    @enderror
+</div>
+
 
                     
                     <div class="form-group text-center">

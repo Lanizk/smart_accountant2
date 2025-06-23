@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Classes;
+use App\Models\Term;
 use App\Models\Student;
 use Auth;
 
@@ -15,9 +17,9 @@ class studentController extends Controller
     }
 
      public function addStudents(){
-        $data['getClass']=Student::getClass();
-        $data['getTerm']=Student::getTerm();
-        return view('student.add');
+        $data['classes']=Classes::all();
+        $data['terms']=Term::all();
+        return view('student.add', $data);
     }
 
     public function insertStudents(Request $request){
@@ -29,9 +31,9 @@ class studentController extends Controller
 
             'name'=>'required|string|max:255',
             'phone'=>'nullable|string|max:20',
-            'admission'=>'required|string|unique:students,admission',
+            'admission'=>'required|string|unique:students,admission ',
             'gender'=>'required|in:male,female',
-            'dob'=>'nullable|date',
+            
             'class_id'=>'required|exists:classes,id',
             'term_id'=>'required|exists:terms,id'
         ]);
@@ -40,7 +42,49 @@ class studentController extends Controller
 
         Student::create($validated);
 
-        return redirect()->back()->with('Success','Student added Successfully');
+        return redirect()->route('listStudents')->with('Success','Student added Successfully');
 
+    }
+
+
+    public function editStudents($id){
+           $student=Student::getSingleStudent($id);
+           $terms=Term::all();
+           $classes=Classes::all();
+
+           return view('student.edit', compact('student','terms','classes'));
+
+    }
+
+
+    public function updateStudents(Request $request,$id){
+
+    
+        $student=Student::getSingleStudent($id);
+
+        $validated= $request->validate([
+
+            'name'=>'required|string|max:255',
+            'phone'=>'nullable|string|max:20',
+            'admission'=>'required|string|unique:students,admission,'. $id,
+            'gender'=>'required|in:male,female',
+            
+            'class_id'=>'required|exists:classes,id',
+            'term_id'=>'required|exists:terms,id'
+        ]);
+
+        $validated['school_id']=auth()->user()->school_id;
+        $student->update($validated);
+
+         return redirect()->route('listStudents')->with('success', 'Student updated successfully.');
+      
+
+    }
+
+    public function deleteStudent($id){
+        $students=Student::findOrFail($id);
+        $students->delete();
+
+        return redirect()->back()->with('success','Deleted Successfully');
     }
 }

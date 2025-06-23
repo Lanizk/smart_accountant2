@@ -28,8 +28,8 @@ Route::get('/student', [StudentController::class, 'listStudents'])->name('listSt
 Route::get('/addstudent', [StudentController::class, 'addStudents'])->name('addStudents');
 Route::post('/addstudent', [StudentController::class, 'insertStudents'])->name('insertStudents');
 Route::get('/editstudent/{id}', [StudentController::class, 'editStudents'])->name('editStudents');
-Route::get('/editstudent/{id}', [DashboardController::class, 'updateStudents'])->name('updateStudent');
-Route::get('/deletestudent/{id}', [DashboardController::class, 'deleteStudent'])->name('deleteStudent');
+Route::post('/editstudent/{id}', [StudentController::class, 'updateStudents'])->name('updateStudent');
+Route::get('/deletestudent/{id}', [StudentController::class, 'deleteStudent'])->name('deleteStudent');
 
 
 
