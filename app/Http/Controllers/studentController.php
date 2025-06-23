@@ -10,9 +10,11 @@ use Illuminate\Http\Request;
 
 class studentController extends Controller
 {
-    public function listStudents()
+    public function listStudents(Request $request)
     {
-        $data['getRecord']=Student::getRecord();
+        $data['getRecord']=Student::getRecord($request);
+        $data['classes'] = Classes::all();
+        $data['terms'] = Term::all(); 
         return view('student.list',$data);
     }
 

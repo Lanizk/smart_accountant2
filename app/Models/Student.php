@@ -24,12 +24,31 @@ class Student extends Model
         static::addGlobalScope(new SchoolScope);
     }
 
-    public static function getRecord(){
-        return self::all();
-    }
+    // public static function getRecord(){
+    //     return self::all();
+    // }
 
     public static function getSingleStudent($id){
         return self::find($id);
+    }
+
+    public static function getRecord($request){
+
+        return self::when($request->class_id, fn($q)=>
+                      $q->where('class_id',$request->class_id))
+
+                      ->when($request->term_id, fn($q)=>
+                      $q->where('term_id',$request->class_id))
+
+                      ->when($request->admission, fn($q)=>
+                      $q->where('admission','like','%'.$request->admission.'%'))
+
+                      ->when($request->name, fn($q)=>
+                      $q->where('name','like','%'.$request->name.'%'))
+
+                      ->get();
+
+
     }
 
     public function class(){

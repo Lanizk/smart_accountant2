@@ -22,6 +22,76 @@
    </div>
 </div>
 </div>
+
+
+
+<div class="row w-100">
+   <div class="col-md-12">
+      <div class="white_shd full margin_bottom_30">
+         <div class="full graph_head">
+            <div class="heading1 margin_0">
+               <h2>Search Filters</h2>
+            </div>
+         </div>
+
+         <div class="full inner_elements">
+            <div class="row">
+               <div class="col-md-12">
+                  <form method="GET" action="{{ route('listStudents') }}" class="row px-4 py-3">
+                     {{-- Class Filter --}}
+                     <div class="col-md-3 mb-3">
+                        <label for="class_id" class="form-label">Class</label>
+                        <select name="class_id" id="class_id" class="form-control">
+                           <option value="">-- All Classes --</option>
+                           @foreach($classes as $class)
+                              <option value="{{ $class->id }}" {{ request('class_id') == $class->id ? 'selected' : '' }}>
+                                 {{ $class->name }}
+                              </option>
+                           @endforeach
+                        </select>
+                     </div>
+
+                     {{-- Term Filter --}}
+                     <div class="col-md-3 mb-3">
+                        <label for="term_id" class="form-label">Term</label>
+                        <select name="term_id" id="term_id" class="form-control">
+                           <option value="">-- All Terms --</option>
+                           @foreach($terms as $term)
+                              <option value="{{ $term->id }}" {{ request('term_id') == $term->id ? 'selected' : '' }}>
+                                 {{ $term->name }}
+                              </option>
+                           @endforeach
+                        </select>
+                     </div>
+
+                     {{-- Admission No Filter --}}
+                     <div class="col-md-3 mb-3">
+                        <label for="admission" class="form-label">Admission No</label>
+                        <input type="text" name="admission" id="admission" class="form-control" value="{{ request('admission') }}">
+                     </div>
+
+                     {{-- Name Filter --}}
+                     <div class="col-md-3 mb-3">
+                        <label for="name" class="form-label">Student Name</label>
+                        <input type="text" name="name" id="name" class="form-control" value="{{ request('name') }}">
+                     </div>
+
+                     {{-- Buttons --}}
+                     <div class="col-12 d-flex justify-content-start align-items-center">
+                        <button type="submit" class="btn btn-primary me-2">Search</button>
+                        <a href="{{ route('listStudents') }}" class="btn btn-secondary">Reset</a>
+                     </div>
+                  </form>
+               </div>
+            </div>
+         </div>
+
+      </div>
+   </div>
+</div>
+
+
+
 <div class="row w-100">
    <div class="col-md-12">
       <div class="white_shd full margin_bottom_30">
@@ -30,7 +100,8 @@
                <h2>Student List</h2>
             </div>
          </div>
-         
+     
+
             <div class="table-responsive-lg">
                <table class="table">
                   <thead>
