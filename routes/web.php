@@ -58,4 +58,12 @@ Route::post('/addterm', [TermController::class, 'insertTerm'])->name('insertterm
 Route::post('/editterm/{id}', [TermController::class, 'editterm'])->name('editterm');
 Route::get('/editterm/{id}', [TermController::class, 'updateterm'])->name('updateterm');
 Route::get('/deleteterm/{id}', [TermController::class, 'delete'])->name('deleteterm');
+
+
+Route::get('/classfee', [ClassFeeController::class, 'listclassfee'])->name('classfeelist');
+Route::get('/addclassfee', [ClassFeeController::class, 'addclassfee'])->name('addclassfee');
+Route::post('/addclassfee', [ClassFeeController::class, 'insertclassfee'])->name('insertclassfee');
+Route::post('/editclassfee/{id}', [ClassFeeController::class, 'editclassfee'])->name('editclassfee');
+Route::get('/editclassfee/{id}', [ClassFeeController::class, 'updateclassfee'])->name('updateclassfee');
+Route::get('/deleteclassfee/{id}', [ClassFeeController::class, 'deleteclassfee'])->name('deleteclassfee');
 });

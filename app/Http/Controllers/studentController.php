@@ -33,7 +33,7 @@ class studentController extends Controller
 
             'name'=>'required|string|max:255',
             'phone'=>'nullable|string|max:20',
-            'admission'=>'required|string|unique:students,admission ',
+            'admission'=>'required|string|unique:students,admission',
             'gender'=>'required|in:male,female',
             
             'class_id'=>'required|exists:classes,id',
