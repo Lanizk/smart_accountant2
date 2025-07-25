@@ -44,6 +44,18 @@
                            
                         </ul>
                      </li>
+
+                     <li>
+                        <a href="#" data-target="#fee" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-diamond purple_color"></i> <span>Fee Module</span></a>
+                        <ul class="collapse list-unstyled" id="fee">
+                           <li><a href="/classfee"> <span>Class Fee</span></a></li>
+                           <li><a href="/term"> <span>Extra Fee</span></a></li>
+                           <li><a href="/term"> <span>Assign Extra Fee</span></a></li>
+
+                           
+                           
+                        </ul>
+                     </li>
                      <!-- <li><a href="tables.html"><i class="fa fa-table purple_color2"></i> <span>Tables</span></a></li>
                      <li>
                         <a href="#apps" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-object-group blue2_color"></i> <span>Apps</span></a>

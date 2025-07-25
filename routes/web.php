@@ -10,6 +10,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\ClassController;
+use App\Http\Controllers\ClassFeeController;
 use App\Http\Controllers\extraFeeController;
 use App\Http\Controllers\TermController;
 
@@ -60,7 +61,7 @@ Route::get('/editterm/{id}', [TermController::class, 'updateterm'])->name('updat
 Route::get('/deleteterm/{id}', [TermController::class, 'delete'])->name('deleteterm');
 
 
-Route::get('/classfee', [ClassFeeController::class, 'listclassfee'])->name('classfeelist');
+Route::get('/classfee', [ClassFeeController::class, 'listClassFee'])->name('classfeelist');
 Route::get('/addclassfee', [ClassFeeController::class, 'addclassfee'])->name('addclassfee');
 Route::post('/addclassfee', [ClassFeeController::class, 'insertclassfee'])->name('insertclassfee');
 Route::post('/editclassfee/{id}', [ClassFeeController::class, 'editclassfee'])->name('editclassfee');

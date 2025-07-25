@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\softDeletes;
+use App\Models\Scopes\SchoolScope;
+use Auth;
+
 
 class ClassFee extends Model
 {
