@@ -33,4 +33,9 @@ class Term extends Model
 
         return $this->hasMany(Student::class);
     }
+
+     public function classfees(){
+
+        return $this->hasMany(ClassFee::class);
+    }
 }

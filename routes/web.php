@@ -64,7 +64,7 @@ Route::get('/deleteterm/{id}', [TermController::class, 'delete'])->name('deletet
 Route::get('/classfee', [ClassFeeController::class, 'listClassFee'])->name('classfeelist');
 Route::get('/addclassfee', [ClassFeeController::class, 'addclassfee'])->name('addclassfee');
 Route::post('/addclassfee', [ClassFeeController::class, 'insertclassfee'])->name('insertclassfee');
-Route::post('/editclassfee/{id}', [ClassFeeController::class, 'editclassfee'])->name('editclassfee');
-Route::get('/editclassfee/{id}', [ClassFeeController::class, 'updateclassfee'])->name('updateclassfee');
+Route::get('/editclassfee/{id}', [ClassFeeController::class, 'editclassfee'])->name('editclassfee');
+Route::post('/editclassfee/{id}', [ClassFeeController::class, 'updateclassfee'])->name('updateclassfee');
 Route::get('/deleteclassfee/{id}', [ClassFeeController::class, 'deleteclassfee'])->name('deleteclassfee');
 });

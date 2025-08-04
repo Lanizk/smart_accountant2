@@ -15,8 +15,9 @@ class ClassFee extends Model
     protected $fillable=['school_id',
         'class_id',
         'term_id',
+        'year',
         'amount',
-        'description',];
+        'description','status'];
 
 
          protected static function booted()

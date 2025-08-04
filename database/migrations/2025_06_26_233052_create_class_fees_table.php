@@ -16,8 +16,10 @@ return new class extends Migration
             $table->foreignId('school_id')->constrained('schools')->onDelete('cascade');
             $table->foreignId('class_id')->constrained('classes')->onDelete('cascade');
             $table->foreignId('term_id')->constrained('terms')->onDelete('cascade');
+            $table->Year('year');
             $table->decimal('amount',10,2);
             $table->text('description')->nullable();
+            $table->string('status')->default('active');
             $table->timestamps();
             $table->softDeletes();
         });

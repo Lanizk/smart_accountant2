@@ -38,6 +38,7 @@ class studentController extends Controller
             
             'class_id'=>'required|exists:classes,id',
             'term_id'=>'required|exists:terms,id'
+            
         ]);
 
         $validated['school_id']=$schoolId;
