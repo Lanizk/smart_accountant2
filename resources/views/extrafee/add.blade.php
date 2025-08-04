@@ -1,100 +1,80 @@
 @extends('layouts.app')
 @section('main')
-<form action="{{ route('extrafeeinsert') }}" method="POST">
-    @csrf
-    <div class="form-group">
-        <label for="name">Fee Name:</label>
-        <input type="text" id="name" name="name" class="form-control" required>
-    </div>
 
-    <div class="form-group">
-        <label for="term">Term:</label>
-        <select id="term" name="term" class="form-control">
-            <option value="Term 1">Term 1</option>
-            <option value="Term 2">Term 2</option>
-            <option value="Term 3">Term 3</option>
-        </select>
-    </div>
 
-    <div class="form-group">
-        <label for="fee_type">Fee Type:</label>
-        <select id="fee_type" name="fee_type" class="form-control">
-            <option value="fixed">Fixed</option>
-            <option value="quantity_based">Quantity-Based</option>
-        </select>
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
     </div>
+@endif
 
-    <!-- Unit Price Field (for quantity-based fees) -->
-    <div class="form-group" id="unitPriceContainer" style="display: none;">
-        <label for="unit_price">Rate per Unit (e.g., per km):</label>
-        <input type="number" id="unit_price" name="unit_price" class="form-control" step="0.01">
-    </div>
 
-    <div class="form-group">
-        <label for="studentSearch">Search Students:</label>
-        <input type="text" id="studentSearch" class="form-control" placeholder="Search by name...">
-    </div>
+<div class="row">
+    <!-- Form Section -->
+    <div class="col-md-12 mt-5">
+        <div class="white_shd full margin_bottom_30">
+            <div class="full graph_head">
+                <div class="heading1 margin_0">
+                    <h2>ExtraFee Category Information</h2>
+                </div>
+            </div>
+            <div class="padding_infor_info">
+                 <form action="{{ route('insertextrafee') }}"  method="post" enctype="multipart/form-data">
+                    @csrf
 
-    <table class="table" id="studentTable">
-        <thead>
-            <tr>
-                <th>Select</th>
-                <th>Student Name</th>
-                <th>Quantity (if applicable e.g. Distance in KM)</th>
-                <th>Total Fee</th>
-            </tr>
-        </thead>
+                    <div class="form-group">
+                        <label for="amount">Name:</label>
+                        <input type="text" id="name" name="name" value="{{ old('name') }}" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="amount">Amount (Kes):</label>
+                        <input type="number" id="amount" name="amount" value="{{ old('amount') }}" class="form-control" required>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="is_quantity_based">Is Quantity Based?:</label>
+                        <select id="is_quantity_based" name="is_quantity_based" class="form-control @error('status') is-invalid @enderror" required>
+                            <option value="">Select is_quantity_based</option>
+                            <option value="0" {{ old('is_quantity_based') == '0' ? 'selected' : '' }}>No</option>
+                            <option value="1" {{ old('is_quantity_based') == '1' ? 'selected' : '' }}>Yes</option>
+                        </select>
+                        @error('status')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+
+                    <div class="form-group mb-3">
+                        <label for="status">Status:</label>
+                        <select id="status" name="status" class="form-control @error('status') is-invalid @enderror" required>
+                            <option value="">Select Status</option>
+                            <option value="active" {{ old('status') == 'active' ? 'selected' : '' }}>Active</option>
+                            <option value="inactive" {{ old('status') == 'inactive' ? 'selected' : '' }}>Inactive</option>
+                        </select>
+                        @error('status')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
         
-    </table>
+                    <div class="form-group">
+                        <label for="name">Description:</label>
+                        <input type="text" id="desccription" name="description" value="{{ old('description') }}" class="form-control" required>
+                    </div>
 
-    <div class="form-group text-center">
-        <button type="submit" class="btn btn-success">Add Fee</button>
+
+                    
+                    <div class="form-group text-center">
+                        <button type="submit" class="btn btn-success">Submit Application</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-</form>
+</div>
 
-<script>
-    document.getElementById('fee_type').addEventListener('change', function() {
-        let unitPriceContainer = document.getElementById('unitPriceContainer');
-        let unitPriceInput = document.getElementById('unit_price');
-        let isQuantityBased = this.value === 'quantity_based';
-
-        unitPriceContainer.style.display = isQuantityBased ? 'block' : 'none';
-        unitPriceInput.value = isQuantityBased ? unitPriceInput.value : ''; 
-    });
-
-    document.querySelectorAll('.student-checkbox').forEach(checkbox => {
-        checkbox.addEventListener('change', function() {
-            let row = this.closest('tr');
-            let quantityInput = row.querySelector('.quantity-input');
-            let totalFeeInput = row.querySelector('.total-fee');
-
-            if (this.checked) {
-                quantityInput.removeAttribute('disabled');
-            } else {
-                quantityInput.setAttribute('disabled', 'true');
-                quantityInput.value = '';
-                totalFeeInput.value = '';
-            }
-        });
-    });
-
-    document.querySelectorAll('.quantity-input').forEach(input => {
-        input.addEventListener('input', function() {
-            let row = this.closest('tr');
-            let totalFeeInput = row.querySelector('.total-fee');
-            let unitPrice = parseFloat(document.getElementById('unit_price').value) || 0;
-            let quantity = parseFloat(this.value) || 0;
-
-            totalFeeInput.value = (quantity * unitPrice).toFixed(2);
-        });
-    });
-
-    document.getElementById('studentSearch').addEventListener('input', function() {
-        let searchValue = this.value.toLowerCase();
-        document.querySelectorAll('#studentTable tr').forEach(row => {
-            let studentName = row.children[1].textContent.toLowerCase();
-            row.style.display = studentName.includes(searchValue) ? '' : 'none';
-        });
-    });
-</script>
 @endsection

@@ -49,7 +49,7 @@
 
                     
                     <div class="form-group mb-3">
-                        <label for="gender">Status:</label>
+                        <label for="status">Status:</label>
                         <select id="status" name="status" class="form-control @error('status') is-invalid @enderror" required>
                             <option value="">Select Status</option>
                             <option value="active" {{ old('gender') == 'active' ? 'selected' : '' }}>Active</option>

@@ -67,4 +67,12 @@ Route::post('/addclassfee', [ClassFeeController::class, 'insertclassfee'])->name
 Route::get('/editclassfee/{id}', [ClassFeeController::class, 'editclassfee'])->name('editclassfee');
 Route::post('/editclassfee/{id}', [ClassFeeController::class, 'updateclassfee'])->name('updateclassfee');
 Route::get('/deleteclassfee/{id}', [ClassFeeController::class, 'deleteclassfee'])->name('deleteclassfee');
+
+
+Route::get('/extrafee', [ExtraFeeController::class, 'listExtraFee'])->name('extrafeelist');
+Route::get('/addextrafee', [ExtraFeeController::class, 'addExtraFee'])->name('addextrafee');
+Route::post('/addextrafee', [ExtraFeeController::class, 'insertExtraFee'])->name('insertextrafee');
+Route::post('/editextrafee/{id}', [ExtraFeeController::class, 'editExtraFee'])->name('editextrafee');
+Route::get('/editextrafee/{id}', [ExtraFeeController::class, 'updateExtraFee'])->name('updateextrafee');
+Route::get('/deleteextrafee/{id}', [ExtraFeeController::class, 'deleteExtraFee'])->name('deleteextrafee');
 });
