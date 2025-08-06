@@ -21,7 +21,7 @@
             </div>
 
             <div class="full px-4 py-4">
-                <form action="{{ route('assign.extra.fee') }}" method="POST">
+                <form action="{{ route('assignextrafee') }}" method="POST">
                     @csrf
                     <div class="row mb-4">
                         <!-- Fee Selection -->
@@ -33,7 +33,7 @@
                                     <option 
                                         value="{{ $fee->id }}"
                                         data-amount="{{ $fee->amount }}"
-                                        data-quantity-based="{{ $fee->quantity_based }}"
+                                        data-quantity-based="{{ $fee->is_quantity_based ? '1':'0'}}"
                                         data-description="{{ $fee->description }}">
                                         {{ $fee->name }} (KES {{ $fee->amount }})
                                     </option>
@@ -51,6 +51,7 @@
                     </div>
 
                     <!-- Student Table -->
+                    <div id="student_table_wrapper" style="display: none;">
                     <div class="table-responsive-lg">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -59,22 +60,23 @@
                                     <th>Student Name</th>
                                     <th>Admission No.</th>
                                     <th>Class</th>
+                                    
                                     <th class="quantity-col">Quantity</th>
                                     <th class="total-col">Total (KES)</th>
                                 </tr>
                             </thead>
                             <tbody id="student_table">
                                 @foreach($students as $student)
-                                    <tr data-class="{{ $student->class_id }}">
+                                    <tr data-class="{{ $student->class_id }}" class="student-row">
                                         <td>
                                             <input type="checkbox" 
                                                    class="student-checkbox" 
                                                    name="students[{{ $student->id }}][selected]" 
                                                    value="1">
                                         </td>
-                                        <td>{{ $student->full_name }}</td>
-                                        <td>{{ $student->admission_number }}</td>
-                                        <td>{{ $student->class->class_name }}</td>
+                                        <td>{{ $student->name }}</td>
+                                        <td>{{ $student->admission }}</td>
+                                        <td>{{ $student->class->name }}</td>
 
                                         <td class="quantity-col">
                                             <input type="number" 
@@ -85,6 +87,8 @@
                                                    disabled>
                                         </td>
 
+                                       
+
                                         <td class="total-col">
                                             <span class="student-total">KES 0.00</span>
                                         </td>
@@ -93,6 +97,7 @@
                             </tbody>
                         </table>
                     </div>
+</div>
 
                     <div class="d-flex justify-content-end mt-4">
                         <button type="submit" class="btn btn-primary px-4 py-2 fw-bold">Assign Fees</button>
@@ -110,26 +115,47 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    const extraFeeSelect = document.getElementById('extra_fee_select');
-    const studentRows = document.querySelectorAll('.student-row');
+    const extraFeeSelect = document.getElementById('extra_fee_id'); // ✅ Correct ID
+    const descriptionElement = document.getElementById('fee_description');
+    const studentRows = document.querySelectorAll('.student-row'); // ✅ Ensure this class exists
+    const studentTableWrapper = document.getElementById('student_table_wrapper'); // ✅ Wrapper for hiding/showing
 
     function updateUIBasedOnFee() {
         const selectedOption = extraFeeSelect.options[extraFeeSelect.selectedIndex];
+
+        // Show table only if a fee is selected
+        if (selectedOption.value !== "") {
+            studentTableWrapper.style.display = 'block';
+        } else {
+            studentTableWrapper.style.display = 'none';
+            descriptionElement.textContent = "Select a fee to see details...";
+            return;
+        }
+
         const amount = parseFloat(selectedOption.dataset.amount);
         const quantityBased = selectedOption.dataset.quantityBased === '1';
+        const description = selectedOption.dataset.description;
 
+        // Show fee description
+        descriptionElement.textContent = description || "No description.";
+
+        // Toggle quantity column visibility
+        document.querySelectorAll('.quantity-col').forEach(cell => {
+            cell.style.display = quantityBased ? 'table-cell' : 'none';
+        });
+
+        // Update each row
         studentRows.forEach(row => {
+            const checkbox = row.querySelector('.student-checkbox');
             const quantityInput = row.querySelector('.quantity-input');
-            const totalField = row.querySelector('.total-field');
+            const totalField = row.querySelector('.student-total');
 
             if (quantityBased) {
-                quantityInput.style.display = 'inline-block';
                 quantityInput.disabled = false;
+                quantityInput.value = ''; // Let user enter
             } else {
-                quantityInput.style.display = 'none';
                 quantityInput.disabled = true;
                 quantityInput.value = 1;
-                totalField.value = amount.toFixed(2);
             }
 
             calculateTotal(row, amount, quantityBased);
@@ -138,12 +164,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function calculateTotal(row, amount, quantityBased) {
         const quantityInput = row.querySelector('.quantity-input');
-        const totalField = row.querySelector('.total-field');
+        const totalField = row.querySelector('.student-total');
         let quantity = quantityBased ? parseFloat(quantityInput.value) || 0 : 1;
-        totalField.value = (quantity * amount).toFixed(2);
+
+        totalField.textContent = `KES ${(quantity * amount).toFixed(2)}`;
     }
 
-    // Update totals when quantity changes
+    // Attach quantity listeners
     studentRows.forEach(row => {
         const quantityInput = row.querySelector('.quantity-input');
         quantityInput.addEventListener('input', () => {
@@ -154,12 +181,10 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // When extra fee changes
+    // Listen for extra fee change
     extraFeeSelect.addEventListener('change', updateUIBasedOnFee);
 
-    // Initial update
+    // Initial state
     updateUIBasedOnFee();
 });
 </script>
-
-

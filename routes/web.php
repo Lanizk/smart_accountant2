@@ -70,6 +70,8 @@ Route::get('/deleteclassfee/{id}', [ClassFeeController::class, 'deleteclassfee']
 
 
 Route::get('/extrafee', [ExtraFeeController::class, 'listExtraFee'])->name('extrafeelist');
+Route::post('/assignextrafee', [ExtraFeeController::class, 'assignStudentExtraFee'])->name('assignextrafee');
+Route::get('/assignextrafee', [ExtraFeeController::class, 'getExtraFee'])->name('getextrafee');
 Route::get('/addextrafee', [ExtraFeeController::class, 'addExtraFee'])->name('addextrafee');
 Route::post('/addextrafee', [ExtraFeeController::class, 'insertExtraFee'])->name('insertextrafee');
 Route::post('/editextrafee/{id}', [ExtraFeeController::class, 'editExtraFee'])->name('editextrafee');

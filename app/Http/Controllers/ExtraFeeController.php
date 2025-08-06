@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ExtraFee;
+use App\Models\Student;
 
 class ExtraFeeController extends Controller
 {
@@ -11,6 +12,11 @@ class ExtraFeeController extends Controller
 
         $extraFees= ExtraFee::with('creator')->get();
         return view('extrafee.list', compact('extraFees'));
+        
+    }
+
+     public function assignExtraFee(){
+        return view('extrafee.assignextrafee');
         
     }
 
@@ -86,4 +92,52 @@ class ExtraFeeController extends Controller
       
               return redirect()->back()->with('success', 'Extra Fee deleted successfully.');
       }
+
+
+
+      public function assignStudentExtraFee(Request $request)
+     
+{
+    // 1. Validate main input
+    $request->validate([
+        'extra_fee_id' => 'required|exists:extra_fees,id',
+        'students' => 'required|array',
+        'students.*.student_id' => 'required|exists:students,id',
+        'students.*.quantity' => 'nullable|numeric|min:1'
+    ]);
+
+    $extraFee = ExtraFee::findOrFail($request->extra_fee_id);
+
+    foreach ($request->students as $studentData) {
+        $quantity = $extraFee->quantity_based ? ($studentData['quantity'] ?? 1) : 1;
+        $amount = $extraFee->amount;
+        $total = $quantity * $amount;
+
+        ExtraFeeAssignment::updateOrCreate(
+            [
+                'extra_fee_id' => $extraFee->id,
+                'student_id' => $studentData['student_id'],
+            ],
+            [
+                'quantity' => $extraFee->quantity_based ? $quantity : null,
+                'total' => $total,
+                'school_id' => auth()->user()->school_id, // if scoped by school
+            ]
+        );
+    }
+
+   return redirect()->route('getextrafee')->with('success', 'Extra fee assigned successfully.');
+
+}
+
+
+public function getExtraFee(){
+
+    
+    $extraFees = ExtraFee::all(); // Automatically scoped to the logged-in school
+    $students = Student::all(); // Also automatically scoped
+
+    return view('extrafee.assignextrafee', compact('extraFees', 'students'));
+}
+
 }
