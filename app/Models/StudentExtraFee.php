@@ -4,16 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\softDeletes;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Scopes\SchoolScope;
 
 class StudentExtraFee extends Model
 {
-    use HasFactory,softDelete;
+    use HasFactory,SoftDeletes;
+    protected $table = 'extra_fee_assignments';
 
     protected $fillable=['student_id',
         'extra_fee_id',
         'amount',
+        'quantity',
         'school_id',
         'created_by',];
 

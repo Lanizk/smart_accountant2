@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\ExtraFee;
 use App\Models\Student;
+use App\Models\StudentExtraFee;
 
 class ExtraFeeController extends Controller
 {
@@ -28,8 +29,6 @@ class ExtraFeeController extends Controller
 
      
     public function insertExtraFee(Request $request){
-
-
         $schoolId=auth()->user()->school_id;
         $userId=auth()->id();
 
@@ -42,8 +41,6 @@ class ExtraFeeController extends Controller
             'status'=>'required|string|in:active,inactive'
             
         ]);
-
-        
 
         $validated['school_id']=$schoolId;
         $validated['created_by']=$userId;
@@ -91,53 +88,61 @@ class ExtraFeeController extends Controller
               $extraFee->delete();
       
               return redirect()->back()->with('success', 'Extra Fee deleted successfully.');
-      }
+    }
 
+//These methods are used to assign the extra fee to particular students
 
-
-      public function assignStudentExtraFee(Request $request)
-     
-{
-    // 1. Validate main input
-    $request->validate([
+    public function assignStudentExtraFee(Request $request)
+         
+    { 
+        $request->validate([       
         'extra_fee_id' => 'required|exists:extra_fees,id',
         'students' => 'required|array',
-        'students.*.student_id' => 'required|exists:students,id',
+        
         'students.*.quantity' => 'nullable|numeric|min:1'
-    ]);
-
-    $extraFee = ExtraFee::findOrFail($request->extra_fee_id);
-
-    foreach ($request->students as $studentData) {
-        $quantity = $extraFee->quantity_based ? ($studentData['quantity'] ?? 1) : 1;
+        ]);
+    
+       
+    
+        $extraFee = ExtraFee::findOrFail($request->extra_fee_id);
+    
+        foreach ($request->students  as $studentId => $studentData) {
+            if (empty($studentData['selected'])) {
+            continue; 
+        }
+        $quantity = !empty($studentData['quantity']) ? (int) $studentData['quantity'] : 1;
         $amount = $extraFee->amount;
         $total = $quantity * $amount;
 
-        ExtraFeeAssignment::updateOrCreate(
+        
+
+        StudentExtraFee::updateOrCreate(
             [
                 'extra_fee_id' => $extraFee->id,
                 'student_id' => $studentData['student_id'],
             ],
             [
-                'quantity' => $extraFee->quantity_based ? $quantity : null,
-                'total' => $total,
+                'quantity' => $quantity,
+                'amount' => $total,
                 'school_id' => auth()->user()->school_id, // if scoped by school
-            ]
-        );
-    }
+                'created_by'=> auth()->user()->id,
+             ]
 
-   return redirect()->route('getextrafee')->with('success', 'Extra fee assigned successfully.');
-
+              
+         );
+        }
+    
+        return redirect()->route('getextrafee')->with('success', 'Extra fee assigned successfully.');
+    
 }
 
 
-public function getExtraFee(){
-
-    
-    $extraFees = ExtraFee::all(); // Automatically scoped to the logged-in school
-    $students = Student::all(); // Also automatically scoped
+    public function getExtraFee(){
+        
+    $extraFees = ExtraFee::all(); 
+    $students = Student::all(); 
 
     return view('extrafee.assignextrafee', compact('extraFees', 'students'));
-}
-
-}
+    }
+    
+    }

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('extra_fee_id')->constrained('extra_fees')->onDelete('cascade');
 
             // Quantity and amount
-            $table->integer('quantity')->nullable(); 
+            $table->integer('quantity'); 
             $table->decimal('amount', 10, 2); 
     
             // Multi-tenancy & tracking

@@ -68,11 +68,14 @@
                             <tbody id="student_table">
                                 @foreach($students as $student)
                                     <tr data-class="{{ $student->class_id }}" class="student-row">
-                                        <td>
-                                            <input type="checkbox" 
-                                                   class="student-checkbox" 
-                                                   name="students[{{ $student->id }}][selected]" 
-                                                   value="1">
+                                          <td>
+                                             
+                                             <input type="hidden" name="students[{{ $student->id }}][student_id]" value="{{ $student->id }}">
+
+                                                    <input type="checkbox" 
+                                                    class="student-checkbox" 
+                                                    name="students[{{ $student->id }}][selected]" 
+                                                    value="1">
                                         </td>
                                         <td>{{ $student->name }}</td>
                                         <td>{{ $student->admission }}</td>
@@ -186,5 +189,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Initial state
     updateUIBasedOnFee();
+
+
+
 });
 </script>
