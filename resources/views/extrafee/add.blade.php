@@ -47,6 +47,20 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+                        <div class="form-group mb-3">
+                        <label for="term_id">Term:</label>
+                        <select id="term_id" name="term_id" class="form-control @error('term_id') is-invalid @enderror" required>
+                            <option value="">Select Term</option>
+                            @foreach($terms as $term)
+                                <option value="{{ $term->id }}" {{ old('term_id') == $term->id ? 'selected' : '' }}>
+                                    {{ $term->name }}-{{ $term->year }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('term_id')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
 
 
                     <div class="form-group mb-3">

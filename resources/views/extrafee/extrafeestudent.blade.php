@@ -24,8 +24,8 @@
     <div class="dropdown">
             <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">Dropright button</button>
             <div class="dropdown-menu">
-               <a class="dropdown-item" href="{{ route('addextrafee') }}">Add Extra Fee</a>
                
+               <a class="dropdown-item" href="{{ route('assignextrafee') }}">Assign Extra Fee</a>
                
             </div>
        </div>
@@ -46,32 +46,32 @@
                   <thead>
                      <tr>
                        
-                        <th>Name</th>
+                        <th>Extra Fee</th>
+                        <th>Student Name</th>
+                        <th>Term</th>
+                        <th>Year</th>
                         <th>Amount</th>
-                        <th>Quantity Based?</th>
-                        <th>Description</th>
-                        <td>Term</td>
-                        <td>Year</td>
+                        <th>Quantity </th>
                         <th>Created By</th>
                         <th>Action</th>
                      </tr>
                   </thead>
 
                   <tbody>
-                     @foreach($extraFees as $extraFee)
+                     @foreach($extraFeeStudents as $extraFeeStudent)
                      <tr>
-                        <td> {{$extraFee->name}}</td>
-                        <td>Kes {{$extraFee->amount,2}}</td>
-                        <td> {{$extraFee->is_quantity_based ? 'yes':'No'}}</td>
-                        <td> {{$extraFee->description}}</td>
-                        <td>{{$extraFee->term->name}}</td>
-                        <td>{{$extraFee->year}}</td>
-                        <td> {{$extraFee->creator->admin_name}}</td>
+                        <td> {{$extraFeeStudent->extraFee->name}}</td>
+                        <td> {{$extraFeeStudent->student->name}}</td>
+                        <td> {{$extraFeeStudent->extraFee->term->name}}</td>
+                        <td> {{$extraFeeStudent->extraFee->year}}</td>
+                        <td>Kes {{$extraFeeStudent->amount,2}}</td>
+                        <td> {{$extraFeeStudent->quantity}}</td>
+                        <td> {{$extraFeeStudent->creator->admin_name}}</td>
 
                            <td style="min-width: 150px;">
-                                      <a href="{{url('/editextrafee/' . $extraFee->id)}}"
+                                      <a href="{{url('/assign-extra-fee/edit/' . $extraFeeStudent->id)}}"
                                          class="btn btn-primary btn-sm">Edit</a>
-                                      <a href="{{url('/deleteextrafee/' . $extraFee->id)}}"
+                                      <a href="{{url('/assign-extra-fee/delete/' . $extraFeeStudent->id)}}"
                                          class="btn btn-danger btn-sm">Delete</a>
                                    </td>
                      </tr>

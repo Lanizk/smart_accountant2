@@ -22,12 +22,12 @@ class StudentExtraFee extends Model
 
           public function student()
     {
-        return $this->belongsTo(Student::class);
+        return $this->belongsTo(Student::class,'student_id');
     }
 
     public function extraFee()
     {
-        return $this->belongsTo(ExtraFee::class);
+        return $this->belongsTo(ExtraFee::class,'extra_fee_id');
     }
 
     public function creator()

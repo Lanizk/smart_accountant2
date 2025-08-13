@@ -42,7 +42,7 @@
                <table class="table">
                   <thead>
                      <tr>
-                        <th>#</th>
+                        
                         <th>Grade</th>
                         <th>Amount</th>
                         <th>Term</th>
@@ -55,11 +55,10 @@
                   <tbody>
                      @foreach($classFees as $value)
                      <tr>
-                        <td>{{$value->id}}</td>
+                        
                         <td>{{$value->class->name}}</td>
                         <td>{{$value->amount}}</td>
                         <td>{{$value->term->name}}</td>
-                        
                         <td>{{$value->year}}</td>
                         <td>{{$value->description}}</td>
                         <td>{{$value->status}}</td>

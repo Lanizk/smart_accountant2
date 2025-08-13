@@ -11,43 +11,44 @@ use Illuminate\Http\Request;
 class ClassFeeController extends Controller
 {
 
-
-   public function listClassFee()
-{
+   public function listClassFee(){
     $classFees = ClassFee::all(); // Scoped automatically
     return view('classfee.list', compact('classFees'));
-}
+    }
 
-    public function addClassFee()
-    {
+    public function addClassFee(){
         $data['classes']=Classes::all();
         $data['terms']=Term::all();
         return view('classfee.add', $data);
-  
     }
 
      
-        public function insertClassFee(Request $request){
-
-
+    public function insertClassFee(Request $request){
         $schoolId=auth()->user()->school_id;
-
         $validated= $request->validate([
-
-            
             'amount'=>'nullable|string|max:20',
             'description'=>'required|string',
             'class_id'=>'required|exists:classes,id',
             'term_id'=>'required|exists:terms,id',
-            'status'=>'required|string|in:active,inactive'
-            
+            'status'=>'required|string|in:active,inactive'       
         ]);
-
         // Get year from term
         $term=Term::findOrFail($validated['term_id']);
         $validated['year']=$term->year;
-
         $validated['school_id']=$schoolId;
+
+
+         $exists = ClassFee::where('school_id', $schoolId)
+        ->where('class_id', $validated['class_id'])
+        ->where('term_id', $validated['term_id'])
+        ->where('year', $validated['year'])
+        ->exists();
+
+          if ($exists) {
+              return redirect()->back()->withErrors([
+                  'class_id' => 'A class fee for this class, term, and year already exists.'
+              ])->withInput();
+          }
 
         ClassFee::create($validated);
 
@@ -55,32 +56,25 @@ class ClassFeeController extends Controller
 
     }
 
-        public function editClassFee($id)
-        {
+    public function editClassFee($id){
            $classfee=ClassFee::findOrFail($id);
            $terms=Term::all();
            $classes=Classes::all();
 
            return view('classfee.edit', compact('classfee','terms','classes'));
 
-        }
+    }
 
-        public function updateClassFee(Request $request, $id)
-        {
+    public function updateClassFee(Request $request, $id){
             $classfee=ClassFee::findOrFail($id);
+            $schoolId=auth()->user()->school_id;
 
-             $schoolId=auth()->user()->school_id;
-
-        $validated= $request->validate([
-
-            
+            $validated= $request->validate([
             'amount'=>'nullable|string|max:20',
             'description'=>'required|string',
             'class_id'=>'required|exists:classes,id',
             'term_id'=>'required|exists:terms,id',
-            'status'=>'required|string|in:active,inactive'
-            
-        ]);
+            'status'=>'required|string|in:active,inactive' ]);
 
         // Get year from term
         $term=Term::findOrFail($validated['term_id']);

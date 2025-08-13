@@ -50,7 +50,7 @@
                         <ul class="collapse list-unstyled" id="fee">
                            <li><a href="/classfee"> <span>Class Fee</span></a></li>
                            <li><a href="/extrafee"> <span>Extra Fee</span></a></li>
-                           <li><a href="/term"> <span>Assign Extra Fee</span></a></li>
+                           <li><a href="/listextrafeestudents"> <span>Assign Extra Fee</span></a></li>
 
                            
                            

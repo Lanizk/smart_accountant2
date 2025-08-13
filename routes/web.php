@@ -70,11 +70,17 @@ Route::get('/deleteclassfee/{id}', [ClassFeeController::class, 'deleteclassfee']
 
 
 Route::get('/extrafee', [ExtraFeeController::class, 'listExtraFee'])->name('extrafeelist');
-Route::post('/assignextrafee', [ExtraFeeController::class, 'assignStudentExtraFee'])->name('assignextrafee');
-Route::get('/assignextrafee', [ExtraFeeController::class, 'getExtraFee'])->name('getextrafee');
 Route::get('/addextrafee', [ExtraFeeController::class, 'addExtraFee'])->name('addextrafee');
 Route::post('/addextrafee', [ExtraFeeController::class, 'insertExtraFee'])->name('insertextrafee');
 Route::post('/editextrafee/{id}', [ExtraFeeController::class, 'editExtraFee'])->name('editextrafee');
 Route::get('/editextrafee/{id}', [ExtraFeeController::class, 'updateExtraFee'])->name('updateextrafee');
 Route::get('/deleteextrafee/{id}', [ExtraFeeController::class, 'deleteExtraFee'])->name('deleteextrafee');
+
+Route::get('/assignextrafee', [ExtraFeeController::class, 'getExtraFee'])->name('getextrafee');
+Route::post('/assignextrafee', [ExtraFeeController::class, 'assignStudentExtraFee'])->name('assignextrafee');
+Route::get('/listextrafeestudents', [ExtraFeeController::class, 'listExtraFeeStudent'])->name('listextrafeestudents');
+Route::get('/assign-extra-fee/edit/{id}', [ExtraFeeController::class, 'editAssignedExtraFee'])->name('editassignedextrafee');
+Route::post('/assign-extra-fee/edit/{id}', [ExtraFeeController::class, 'updateAssignedExtraFee'])->name('updateassignedextrafee');
+Route::get('/assign-extra-fee/delete/{id}', [ExtraFeeController::class, 'deleteAssignedExtraFee'])->name('deleteassignedextrafee');
+    
 });

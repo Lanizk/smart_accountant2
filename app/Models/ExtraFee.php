@@ -12,7 +12,8 @@ class ExtraFee extends Model
 {
      use softDeletes, HasFactory;
      protected $fillable=[
-        'name','amount','is_quantity_based', 'description', 'school_id', 'created_by','status'
+        'name','amount','is_quantity_based', 'description', 'school_id', 'created_by','status','term_id',
+        'year',
      ];
 
 
@@ -25,4 +26,13 @@ class ExtraFee extends Model
     {
         return $this->belongsTo(User::class, 'created_by');
     }
+
+      public function class()
+        {
+            return $this->belongsTo(Classes::class);
+        }
+
+        public function term(){
+            return $this->belongsTo(Term::class);
+        }
 }
