@@ -7,6 +7,7 @@ use App\Models\ExtraFee;
 use App\Models\Student;
 use App\Models\Term;
 use App\Models\ClassFee;
+use App\Models\Classes;
 use App\Models\StudentExtraFee;
 
 class ExtraFeeController extends Controller
@@ -147,12 +148,60 @@ class ExtraFeeController extends Controller
 }
 
 // Method get the extra fees from the Extra fee Table to display in the dropdown in the assign extra fee page
-    public function getExtraFee(){
-    $extraFees = ExtraFee::all(); 
-    $students = Student::all(); 
+    // public function getExtraFee(){
+    // $extraFees = ExtraFee::all(); 
+    // $students = Student::all(); 
 
-    return view('extrafee.assignextrafee', compact('extraFees', 'students'));
+    // return view('extrafee.assignextrafee', compact('extraFees', 'students'));
+    // }
+
+
+  public function showAssignExtraFeeForm(Request $request)
+{
+    $extraFees = ExtraFee::all();
+    $classes = Classes::all();
+
+    // Start with empty students (until an extra fee is chosen)
+    $students = collect();
+
+    // Load students only if an extra fee is selected
+    if ($request->filled('extra_fee_id')) {
+        $studentsQuery = Student::where('school_id', auth()->user()->school_id);
+
+        // Apply filters only if they are given
+        if ($request->filled('class_id')) {
+            $studentsQuery->where('class_id', $request->class_id);
+        }
+
+        if ($request->filled('search')) {
+            $studentsQuery->where(function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->search . '%')
+                  ->orWhere('admission', 'like', '%' . $request->search . '%');
+            });
+        }
+
+        $students = $studentsQuery->get();
     }
+
+    // Get assigned fees only if extra fee is selected
+    $assignedExtraFees = collect();
+    if ($request->filled('extra_fee_id')) {
+        $assignedExtraFees = StudentExtraFee::where('extra_fee_id', $request->extra_fee_id)
+            ->where('school_id', auth()->user()->school_id)
+            ->get()
+            ->keyBy('student_id');
+    }
+
+    return view('extrafee.assignextrafee', compact(
+        'extraFees', 'students', 'assignedExtraFees', 'classes'
+    ))->with([
+        'selectedExtraFee' => $request->extra_fee_id,
+        'selectedClass'    => $request->class_id,
+        'searchQuery'      => $request->search
+    ]);
+}
+
+
 
 
     public function listExtraFeeStudent()
@@ -184,10 +233,12 @@ class ExtraFeeController extends Controller
 
     public function updateAssignedExtraFee(Request $request, $id)
 {
+    
     $request->validate([
         'extra_fee_id' => 'required|exists:extra_fees,id',
         'quantity' => 'required|numeric|min:1'
     ]);
+    dd($request);
 
     // Find the assigned extra fee record
     $assignedFee = StudentExtraFee::findOrFail($id);
