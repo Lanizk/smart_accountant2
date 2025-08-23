@@ -14,13 +14,11 @@
 @endif
 
 <div class="row column_title">
+   
 <div class="col-md-12">
-   <div class="col-md-12">
-   <div class="d-flex justify-content-end align-items-center py-3 px-4 white_shd border rounded mb-3 mt-3">
-    
-   <a href="{{ route('addStudents') }}" class="btn btn-success px-4 py-2 fw-bold">+ Add New</a>
-   </div>
-</div>
+    <div class="page_title">
+   <a href="{{ route('addStudents') }}" class="btn btn-success px-4 py-2 fw-bold">+ Add New</a> 
+    </div>
 </div>
 
 
@@ -106,7 +104,7 @@
                <table class="table">
                   <thead>
                      <tr>
-                        <th>#</th>
+                        
                         <th>Full Name</th>
                         <th>Phone No</th>
                         <th>Admission No</th>
@@ -119,7 +117,7 @@
                   <tbody>
                      @foreach($getRecord as $value)
                      <tr>
-                        <td>{{$value->id}}</td>
+                        
                         <td>{{$value->name}}</td>
                         <td>{{$value->phone}}</td>
                         <td>{{$value->admission}}</td>

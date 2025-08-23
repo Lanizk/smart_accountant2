@@ -37,7 +37,7 @@
       <div class="white_shd full margin_bottom_30">
          <div class="full graph_head">
             <div class="heading1 margin_0">
-               <h2>Responsive Tables</h2>
+               <h2>Students Assigned</h2>
             </div>
          </div>
          <div class="table_section padding_infor_info">
@@ -48,6 +48,7 @@
                        
                         <th>Extra Fee</th>
                         <th>Student Name</th>
+                      
                         <th>Term</th>
                         <th>Year</th>
                         <th>Amount</th>
@@ -62,6 +63,7 @@
                      <tr>
                         <td> {{$extraFeeStudent->extraFee->name}}</td>
                         <td> {{$extraFeeStudent->student->name}}</td>
+                        
                         <td> {{$extraFeeStudent->extraFee->term->name}}</td>
                         <td> {{$extraFeeStudent->extraFee->year}}</td>
                         <td>Kes {{$extraFeeStudent->amount,2}}</td>

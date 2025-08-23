@@ -16,19 +16,8 @@
 <div class="row column_title">
  
 <div class="col-md-12">
-   <div class="col-md-12">
-       
-   <div class="d-flex justify-content-end align-items-center py-3 px-4 white_shd border rounded mb-3 mt-3">
-    
-   <!-- <a href="{{ route('addextrafee') }}" class="btn btn-success px-4 py-2 fw-bold">+ Add New</a> -->
-    <div class="dropdown">
-            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">Dropright button</button>
-            <div class="dropdown-menu">
-               <a class="dropdown-item" href="{{ route('addextrafee') }}">Add Extra Fee</a>
-               
-               
-            </div>
-       </div>
+    <div class="page_title d-flex justify-content-end align-items-center py-3 px-4 rounded mb-3 ">
+    <a href="{{ route('addextrafee') }}" class="btn btn-success px-4 py-2 fw-bold">+ Add New</a> 
    </div>
 </div>
 </div>
@@ -37,7 +26,7 @@
       <div class="white_shd full margin_bottom_30">
          <div class="full graph_head">
             <div class="heading1 margin_0">
-               <h2>Responsive Tables</h2>
+               <h2>Extra Fee List</h2>
             </div>
          </div>
          <div class="table_section padding_infor_info">

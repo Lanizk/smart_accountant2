@@ -3,12 +3,10 @@
 @section('main')
 <div class="row column_title">
     <div class="col-md-12">
-        <div class="col-md-12">
-            <div class="d-flex justify-content-end align-items-center py-3 px-4 white_shd border rounded mb-3 mt-3">
-                <a href="#" class="btn btn-success px-4 py-2 fw-bold">+ Add New</a>
-            </div>
-        </div>
-    </div>
+         <div class="page_title">
+        
+</div>
+</div>
 </div>
 
 <div class="row w-100">
