@@ -13,25 +13,51 @@
     </div>
 @endif
 
-<div class="row column_title">
- 
-<div class="col-md-12">
-   <div class="col-md-12">
-       
-   <div class="d-flex justify-content-end align-items-center py-3 px-4 white_shd border rounded mb-3 mt-3">
-    
-   <!-- <a href="{{ route('addextrafee') }}" class="btn btn-success px-4 py-2 fw-bold">+ Add New</a> -->
-    <div class="dropdown">
-            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">Dropright button</button>
-            <div class="dropdown-menu">
-               
-               <a class="dropdown-item" href="{{ route('assignextrafee') }}">Assign Extra Fee</a>
-               
-            </div>
-       </div>
-   </div>
+<div class="row column_title mb-3">
+    <div class="col-md-12">
+        <div class="d-flex justify-content-between align-items-center page_title">
+            <h2 >Student ExtraFee Assignment List</h2>
+            <a href="{{ route('assignextrafee') }}" class="btn btn-success px-4 py-2 fw-bold">
+                + Assign Extra Fee
+            </a>
+        </div>
+    </div>
 </div>
-</div>
+
+
+<form method="GET" action="{{ route('listextrafeestudents') }}">
+    <div class="row mb-4">
+        <!-- Extra Fee Filter -->
+        <div class="col-md-4">
+            <label for="extra_fee_id" class="form-label">Extra Fee</label>
+            <select name="extra_fee_id" id="extra_fee_id" class="form-control" onchange="this.form.submit()">
+                <option value="">-- Filter by Extra Fee --</option>
+                @foreach($extraFees as $extraFee)
+                    <option value="{{ $extraFee->id }}" 
+                        {{ request('extra_fee_id') == $extraFee->id ? 'selected' : '' }}>
+                        {{ $extraFee->name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
+        <!-- Student Name Filter -->
+        <div class="col-md-4">
+            <label for="student_name" class="form-label">Search Student</label>
+            <input type="text" name="student_name" id="student_name" 
+                   value="{{ request('student_name') }}" 
+                   class="form-control" placeholder="Name or Admission No.">
+        </div>
+
+        <!-- Buttons -->
+        <div class="col-md-4 d-flex align-items-end" style="gap: 1rem;">
+            <button type="submit" class="btn btn-primary w-100">Filter</button>
+            <a href="{{ route('listextrafeestudents') }}" class="btn btn-secondary w-100">Reset</a>
+        </div>
+    </div>
+</form>
+
+
 <div class="row w-100">
    <div class="col-md-12">
       <div class="white_shd full margin_bottom_30">
@@ -45,10 +71,8 @@
                <table class="table">
                   <thead>
                      <tr>
-                       
                         <th>Extra Fee</th>
                         <th>Student Name</th>
-                      
                         <th>Term</th>
                         <th>Year</th>
                         <th>Amount</th>
@@ -85,4 +109,4 @@
       </div>
    </div>
 </div>
-                        @endsection
+@endsection

@@ -204,12 +204,27 @@ class ExtraFeeController extends Controller
 
 
 
-    public function listExtraFeeStudent()
+    public function listExtraFeeStudent(Request $request)
     {
-        
-        $extraFeeStudents=StudentExtraFee::all();
-        
-        return view('extrafee.extrafeestudent', compact('extraFeeStudents'));
+        // $extraFeeStudents=StudentExtraFee::all();
+        // return view('extrafee.extrafeestudent', compact('extraFeeStudents'));
+
+        $query=StudentExtraFee::query();
+
+        if($request->filled('extra_fee_id')){
+            $query->where('extra_fee_id',$request->extra_fee_id);
+        }
+
+        if($request->filled('student_name')){
+            $query->whereHas('student',function($q) use ($request){
+                $q->where('name','like','%'.$request->student_name.'%');
+            });
+        }
+
+        $extraFeeStudents=$query->with(['extraFee.term','student','creator'])->get();
+        $extraFees=ExtraFee::all();
+
+        return view('extrafee.extrafeestudent', compact('extraFeeStudents','extraFees'));
 
     }
 

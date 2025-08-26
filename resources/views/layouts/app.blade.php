@@ -15,7 +15,7 @@
                      <div class="user_profle_side">
                         <div class="user_img"><img class="img-responsive" src="/images/layout_img/user_img.jpg" alt="#" /></div>
                         <div class="user_info">
-                           <h6>John David</h6>
+                           <h6>Kenyatta Primary</h6>
                            <p><span class="online_animation"></span> Online</p>
                         </div>
                      </div>
@@ -51,6 +51,7 @@
                            <li><a href="/classfee"> <span>Class Fee</span></a></li>
                            <li><a href="/extrafee"> <span>Extra Fee</span></a></li>
                            <li><a href="/listextrafeestudents"> <span>Assign Extra Fee</span></a></li>
+                           <li><a href="/try"> <span>Fee Agregate List</span></a></li>
 
                            
                            
@@ -113,7 +114,7 @@
                               </ul>
                               <ul class="user_profile_dd">
                                  <li>
-                                    <a class="dropdown-toggle" data-toggle="dropdown"><img class="img-responsive rounded-circle" src="/images/layout_img/user_img.jpg" alt="#" /><span class="name_user">John David</span></a>
+                                    <a class="dropdown-toggle" data-toggle="dropdown"><img class="img-responsive rounded-circle" src="/images/layout_img/user_img.jpg" alt="#" /><span class="name_user">Allan Murimi</span></a>
                                     <div class="dropdown-menu">
                                        <a class="dropdown-item" href="profile.html">My Profile</a>
                                        <a class="dropdown-item" href="settings.html">Settings</a>
