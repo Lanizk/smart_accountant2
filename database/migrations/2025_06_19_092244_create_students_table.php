@@ -19,6 +19,7 @@ return new class extends Migration
              $table->string('admission');
              $table->enum('gender',['male','female']);
              $table->foreignId('class_id')->constrained('classes')->onDelete('cascade');
+             $table->decimal('prev_balance', 10, 2)->default(0)->after('class_id');
              $table->foreignId('term_id')->constrained('terms')->onDelete('cascade');
 
             $table->timestamps();

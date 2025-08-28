@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Scopes\SchoolScope;
 
+
 class Student extends Model
 {
     use HasFactory, SoftDeletes;
@@ -60,4 +61,7 @@ class Student extends Model
 
         return $this->belongsTo(Term::class);
     }
+
+   
+
 }
