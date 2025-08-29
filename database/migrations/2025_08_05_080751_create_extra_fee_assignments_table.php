@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('student_id')->constrained()->onDelete('cascade');
             $table->foreignId('extra_fee_id')->constrained('extra_fees')->onDelete('cascade');
-
+            
             // Quantity and amount
             $table->integer('quantity'); 
             $table->decimal('amount', 10, 2); 

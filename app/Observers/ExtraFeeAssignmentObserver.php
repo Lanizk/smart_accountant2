@@ -1,19 +1,19 @@
 <?php
 
 namespace App\Observers;
-
-use App\Models\ExtraFeeAssignment;
+use App\Services\InvoiceService;
+use App\Models\StudentExtraFee;
 
 class ExtraFeeAssignmentObserver
 {
-    public function created(ExtraFeeAssignment $extraFee)
+    public function created(StudentExtraFee $extraFee)
     {
         $student = $extraFee->student;
         app(InvoiceService::class)
             ->createOrUpdateInvoice($student, $extraFee->term_id);
     }
 
-    public function deleted(ExtraFeeAssignment $extraFee)
+    public function deleted(StudentExtraFee $extraFee)
     {
         $student = $extraFee->student;
         app(InvoiceService::class)
@@ -23,15 +23,16 @@ class ExtraFeeAssignmentObserver
     /**
      * Handle the ExtraFeeAssignment "deleted" event.
      */
-    public function updated(ExtraFeeAssignment $extraFeeAssignment): void
+    public function updated(StudentExtraFee $extraFee): void
     {
-        //
+        $student = $extraFee->student;
+        app(InvoiceService::class)->createOrUpdateInvoice($student, $extraFee->term_id);
     }
 
     /**
      * Handle the ExtraFeeAssignment "restored" event.
      */
-    public function restored(ExtraFeeAssignment $extraFeeAssignment): void
+    public function restored(StudentExtraFee $extraFee): void
     {
         //
     }
@@ -39,7 +40,7 @@ class ExtraFeeAssignmentObserver
     /**
      * Handle the ExtraFeeAssignment "force deleted" event.
      */
-    public function forceDeleted(ExtraFeeAssignment $extraFeeAssignment): void
+    public function forceDeleted(StudentExtraFee $extraFee): void
     {
         //
     }

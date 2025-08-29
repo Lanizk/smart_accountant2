@@ -12,7 +12,9 @@ class StudentObserver
      */
     public function created(Student $student): void
     {
-        //
+          if ($student->class_id && $student->term_id) {
+            app(InvoiceService::class)->createOrUpdateInvoice($student, $student->term_id);
+        }
     }
 
     /**

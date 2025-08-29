@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Models\Invoice;
 use App\Models\InvoiceItem;
 use App\Models\ClassFee;
-use App\Models\ExtraFeeAssignment;
+use App\Models\StudentExtraFee;
 
 class InvoiceService
 {
@@ -38,7 +38,7 @@ class InvoiceService
         }
 
         // 2. Add Extra Fees (per student)
-        $extraFees = ExtraFeeAssignment::where('student_id', $student->id)->get();
+        $extraFees = StudentExtraFee::where('student_id', $student->id)->get();
 
         foreach ($extraFees as $extra) {
             $amount = $extra->is_quantity_based
@@ -46,6 +46,7 @@ class InvoiceService
                 : $extra->amount;
 
             $invoice->items()->create([
+                'term_id'=> $invoice->term_id,
                 'description' => "Extra Fee: {$extra->extraFee->name}",
                 'amount' => $amount,
             ]);
@@ -67,7 +68,22 @@ class InvoiceService
             'balance' => $total - $invoice->amount_paid,
             'status' => $this->calculateStatus($invoice),
         ]);
+        // event(new InvoiceUpdated($invoice));
 
+        return $invoice;
+    }
+
+      public function paymentMade(Invoice $invoice, $amount)
+    {
+        // Increment the paid amount
+        $invoice->increment('amount_paid', $amount);
+
+        // Update balance & status
+        $invoice->update([
+            'balance' => $invoice->total_amount - $invoice->amount_paid,
+            'status' => $this->calculateStatus($invoice),
+        ]);
+        // event(new InvoiceUpdated($invoice));
         return $invoice;
     }
 

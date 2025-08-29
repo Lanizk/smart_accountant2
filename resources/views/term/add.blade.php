@@ -17,7 +17,15 @@
                         <label for="name">Term Name:</label>
                         <input type="text" id="name" name="name" class="form-control" required>
                     </div>
+                    <div class="form-group">
+                        <label for="start_date">Start Date:</label>
+                        <input type="date" id="start_date" name="start_date" class="form-control" required>
+                    </div>
 
+                    <div class="form-group">
+                        <label for="end_date">End Date:</label>
+                        <input type="date" id="end_date" name="end_date" class="form-control" required>
+                    </div>
                     <div class="form-group">
                         <label for="term_year">Term Year:</label>
                         <input type="text" id="term_year" name="year" class="form-control" required>

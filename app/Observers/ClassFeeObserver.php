@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Observers;
-
+use App\Services\InvoiceService;
 use App\Models\ClassFee;
 
 class ClassFeeObserver

@@ -27,6 +27,8 @@ class TermController extends Controller
         $save=new Term;
         $save->school_id=$schoolId;
         $save->name=$request->name;
+        $save->start_date=$request->start_date;
+        $save->end_date=$request->end_date;
         $save->year=$request->year;
         $save->save();
 
