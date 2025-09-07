@@ -9,6 +9,7 @@ use App\Models\Term;
 use App\Models\ClassFee;
 use App\Models\Classes;
 use App\Models\StudentExtraFee;
+use App\Services\InvoiceService;
 
 class ExtraFeeController extends Controller
 {
@@ -103,57 +104,72 @@ class ExtraFeeController extends Controller
 
 //These methods are used to assign the extra fee to particular students
 
-    public function assignStudentExtraFee(Request $request)
-         
-    { 
-        $request->validate([       
-        'extra_fee_id' => 'required|exists:extra_fees,id',
-        'students' => 'required|array',
-        'students.*.quantity' => 'nullable|numeric|min:1'
-        ]);
-    
-       
-    
-        $extraFee = ExtraFee::findOrFail($request->extra_fee_id);
-    
-        foreach ($request->students  as $studentId => $studentData) {
-            if (empty($studentData['selected'])) {
-            continue; 
+public function assignStudentExtraFee(Request $request)
+{
+    $request->validate([
+        'extra_fee_id'          => 'required|exists:extra_fees,id',
+        'students'              => 'required|array',
+        'students.*.quantity'   => 'nullable|numeric|min:1',
+    ]);
+
+    $extraFee = ExtraFee::findOrFail($request->extra_fee_id);
+
+    // collect student fee records for bulk insert/update
+    $studentFees = [];
+    $updatedStudentIds = [];
+
+    foreach ($request->students as $studentId => $studentData) {
+        if (empty($studentData['selected'])) {
+            continue; // skip unchecked students
         }
+
         $quantity = !empty($studentData['quantity']) ? (int) $studentData['quantity'] : 1;
-        $amount = $extraFee->amount;
-        $total = $quantity * $amount;
+        $amount   = $extraFee->amount;
+        $total    = $quantity * $amount;
 
-        
+        // Instead of firing observer per student, we collect
+        $studentFees[] = [
+            'student_id'     => $studentData['student_id'],
+            'extra_fee_id'   => $extraFee->id,
+            'quantity'       => $quantity,
+            'amount'         => $total,
+            'school_id'      => auth()->user()->school_id,
+            'created_by'     => auth()->user()->id,
+            'created_at'     => now(),
+            'updated_at'     => now(),
+        ];
 
-        StudentExtraFee::updateOrCreate(
-            [
-                'extra_fee_id' => $extraFee->id,
-                'student_id' => $studentData['student_id'],
-            ],
-            [
-                'quantity' => $quantity,
-                'amount' => $total,
-                'school_id' => auth()->user()->school_id, // if scoped by school
-                'created_by'=> auth()->user()->id,
-             ]
+        $updatedStudentIds[] = $studentData['student_id'];
+    }
 
-              
-         );
+    if (!empty($studentFees)) {
+        // 🛑 prevent observer from running during batch
+        app()->instance('batchAssigningExtraFees', true);
+
+        // use upsert so existing records update instead of duplicate
+        StudentExtraFee::upsert(
+            $studentFees,
+            ['extra_fee_id', 'student_id'], // unique keys
+            ['quantity', 'amount', 'school_id', 'created_by', 'updated_at']
+        );
+
+        // ✅ Refresh to make sure term_id is available
+        $extraFee->refresh();
+
+        // 🔑 Fire invoice updates once per student
+        $students = Student::whereIn('id', $updatedStudentIds)->get();
+        foreach ($students as $student) {
+            app(InvoiceService::class)->createOrUpdateInvoice($student, $extraFee->term_id);
         }
-         return redirect()->route('listextrafeestudents')->with('success','ExtraFee added Successfully');
-    
-        // return redirect()->route('getextrafee')->with('success', 'Extra fee assigned successfully.');
-    
+
+        // Reactivate observer
+        app()->forgetInstance('batchAssigningExtraFees');
+    }
+
+    return redirect()
+        ->route('listextrafeestudents')
+        ->with('success', 'Extra Fee(s) assigned successfully.');
 }
-
-// Method get the extra fees from the Extra fee Table to display in the dropdown in the assign extra fee page
-    // public function getExtraFee(){
-    // $extraFees = ExtraFee::all(); 
-    // $students = Student::all(); 
-
-    // return view('extrafee.assignextrafee', compact('extraFees', 'students'));
-    // }
 
 
   public function showAssignExtraFeeForm(Request $request)
@@ -269,11 +285,20 @@ class ExtraFeeController extends Controller
 
 
 
-    public function deleteAssignedExtraFee($id){
-              $assignedFee = StudentExtraFee::findOrFail($id); 
-              $assignedFee->delete();
-              return redirect()->back()->with('success', 'Extra Fee deleted successfully.');
-   
+   public function deleteAssignedExtraFee($id)
+{
+    $assignedFee = StudentExtraFee::with('extraFee', 'student')->findOrFail($id);
+
+    $student = $assignedFee->student;
+    $termId  = $assignedFee->extraFee?->term_id;
+
+    $assignedFee->delete();
+
+    if ($student && $termId) {
+        app(\App\Services\InvoiceService::class)->createOrUpdateInvoice($student, $termId);
     }
+
+    return redirect()->back()->with('success', 'Extra Fee deleted successfully.');
+}
     
     }

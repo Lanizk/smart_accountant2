@@ -51,7 +51,8 @@
                            <li><a href="/classfee"> <span>Class Fee</span></a></li>
                            <li><a href="/extrafee"> <span>Extra Fee</span></a></li>
                            <li><a href="/listextrafeestudents"> <span>Assign Extra Fee</span></a></li>
-                           <li><a href="/try"> <span>Fee Agregate List</span></a></li>
+                           <li><a href="/invoices"> <span>Fee Agregate List</span></a></li>
+                           <li><a href="/try"> <span>Try</span></a></li>
 
                            
                            

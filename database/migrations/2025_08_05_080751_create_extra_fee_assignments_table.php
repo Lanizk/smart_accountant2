@@ -25,6 +25,7 @@ return new class extends Migration
             $table->foreignId('created_by')->constrained('users')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
+              $table->unique(['student_id', 'extra_fee_id']);
         });
     }
 

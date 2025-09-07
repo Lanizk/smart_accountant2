@@ -13,6 +13,8 @@ use App\Http\Controllers\ClassController;
 use App\Http\Controllers\ClassFeeController;
 use App\Http\Controllers\extraFeeController;
 use App\Http\Controllers\TermController;
+use App\Http\Controllers\InvoiceController;
+
 
 Route::get('/register', [RegisterController::class, 'showRegistrationForm']);
 Route::post('/register', [RegisterController::class, 'register'])->name('register');
@@ -82,5 +84,13 @@ Route::get('/listextrafeestudents', [ExtraFeeController::class, 'listExtraFeeStu
 Route::get('/assign-extra-fee/edit/{id}', [ExtraFeeController::class, 'editAssignedExtraFee'])->name('editassignedextrafee');
 Route::post('/assign-extra-fee/edit/{id}', [ExtraFeeController::class, 'updateAssignedExtraFee'])->name('updateassignedextrafee');
 Route::get('/assign-extra-fee/delete/{id}', [ExtraFeeController::class, 'deleteAssignedExtraFee'])->name('deleteassignedextrafee');
-    
+
+
+
+Route::prefix('invoices')->group(function () {
+    Route::get('/', [InvoiceController::class, 'index'])->name('invoices.index');
+    Route::get('{invoice}/print', [InvoiceController::class, 'print'])->name('invoices.print');
+   
+    Route::post('{invoice}/payments', [InvoiceController::class, 'storePayment'])->name('payments.store');
+});
 });
