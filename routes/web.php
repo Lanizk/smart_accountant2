@@ -14,6 +14,7 @@ use App\Http\Controllers\ClassFeeController;
 use App\Http\Controllers\extraFeeController;
 use App\Http\Controllers\TermController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\StatementController;
 
 
 Route::get('/register', [RegisterController::class, 'showRegistrationForm']);
@@ -88,9 +89,16 @@ Route::get('/assign-extra-fee/delete/{id}', [ExtraFeeController::class, 'deleteA
 
 
 Route::prefix('invoices')->group(function () {
+    
+
     Route::get('/', [InvoiceController::class, 'index'])->name('invoices.index');
     Route::get('{invoice}/print', [InvoiceController::class, 'print'])->name('invoices.print');
    
     Route::post('{invoice}/payments', [InvoiceController::class, 'storePayment'])->name('payments.store');
 });
 });
+
+
+
+Route::get('/statements/{student}', [StatementController::class, 'single'])->name('statements.single');
+Route::post('/statements/bulk', [StatementController::class, 'bulk'])->name('statements.bulk');

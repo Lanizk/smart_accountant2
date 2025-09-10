@@ -62,6 +62,12 @@ class Student extends Model
         return $this->belongsTo(Term::class);
     }
 
+
+      public function invoices()
+    {
+        return $this->hasMany(Invoice::class);
+    }
+
    
 
 }

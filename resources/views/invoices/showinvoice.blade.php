@@ -20,12 +20,52 @@
     <div class="d-flex justify-content-between align-items-center page_title">
       <h2 class="m-0">Student Invoices</h2>
       <div class="d-flex " style="gap:1rem;">
-        <a href="" class="btn btn-outline-primary px-4 py-2 fw-bold">
-          Print All Statements
-        </a>
-        <a href="{{ route('assignextrafee') }}" class="btn btn-success px-4 py-2 fw-bold">
-          + Assign Extra Fee
-        </a>
+       {{-- Bulk Print Button --}}
+<button type="button" class="btn btn-outline-primary px-4 py-2 fw-bold"
+        data-toggle="modal" data-target="#bulkPrintModal">
+  Print All Statements
+</button>
+
+{{-- Bulk Print Modal --}}
+<div class="modal fade" id="bulkPrintModal" tabindex="-1" role="dialog" aria-labelledby="bulkPrintModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+       <form method="POST" action="{{ route('statements.bulk') }}">
+        @csrf
+      <div class="modal-header">
+        <h5 class="modal-title" id="bulkPrintModalLabel">Bulk Print Statements</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="class_id" class="form-label">Select Class</label>
+            <select name="class_id" id="class_id" class="form-control" required>
+              @foreach($classes as $class)
+                <option value="{{ $class->id }}">{{ $class->name }}</option>
+              @endforeach
+            </select>
+          </div>
+
+          <div class="mb-3">
+             <label for="term_id" class="form-label">Select Term</label>
+             <select name="term_id" id="term_id" class="form-control" required>
+             @foreach($terms as $term)
+             <option value="{{ $term->id }}">{{ $term->name }}</option>
+             @endforeach
+             </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Download Zip</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+       
       </div>
     </div>
   </div>
@@ -87,8 +127,8 @@
                               data-label="Payment">
                         Add Payment
                       </button>
-                      <a href="{{ route('invoices.print', $invoice->id) }}" 
-                         class="btn btn-outline-secondary btn-sm">
+                     <a href="{{ route('statements.single', $invoice->student->id) }}" 
+                        class="btn btn-outline-secondary btn-sm">
                         Print Statement
                       </a>
                     </div>

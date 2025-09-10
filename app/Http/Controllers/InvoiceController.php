@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Models\Invoice;
+use App\Models\Classes;
+use App\Models\Term;
 use App\Models\InvoicePayment;
 
 use Illuminate\Http\Request;
@@ -15,8 +17,11 @@ class InvoiceController extends Controller
                 'items',
                 'payments'
             ])->latest()->get();
+             $classes = Classes::all();
+             $terms   = Term::all();
 
-            return view('invoices.showinvoice',compact('invoices'));
+
+            return view('invoices.showinvoice',compact('invoices','classes','terms'));
         }
 
 
