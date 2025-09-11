@@ -15,6 +15,7 @@ use App\Http\Controllers\extraFeeController;
 use App\Http\Controllers\TermController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\StatementController;
+use App\Http\Controllers\ExpenseCategoryController;
 
 
 Route::get('/register', [RegisterController::class, 'showRegistrationForm']);
@@ -102,3 +103,7 @@ Route::prefix('invoices')->group(function () {
 
 Route::get('/statements/{student}', [StatementController::class, 'single'])->name('statements.single');
 Route::post('/statements/bulk', [StatementController::class, 'bulk'])->name('statements.bulk');
+
+
+Route::resource('expense_categories', ExpenseCategoryController::class);
+

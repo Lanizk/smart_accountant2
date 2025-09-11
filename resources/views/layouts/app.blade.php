@@ -52,10 +52,15 @@
                            <li><a href="/extrafee"> <span>Extra Fee</span></a></li>
                            <li><a href="/listextrafeestudents"> <span>Assign Extra Fee</span></a></li>
                            <li><a href="/invoices"> <span>Fee Agregate List</span></a></li>
-                           <li><a href="/try"> <span>Try</span></a></li>
+                           <li><a href="/try"> <span>Try</span></a></li> 
+                        </ul>
+                     </li>
 
-                           
-                           
+                      <li>
+                        <a href="#" data-target="#expenses" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-diamond purple_color"></i> <span>Expenses</span></a>
+                        <ul class="collapse list-unstyled" id="expenses">
+                           <li> <a href="{{ route('expense_categories.index') }}"> <span>Expenses</span></a></li>
+                           <li><a href="#"> <span>Expense Category</span></a></li>
                         </ul>
                      </li>
                      <!-- <li><a href="tables.html"><i class="fa fa-table purple_color2"></i> <span>Tables</span></a></li>
