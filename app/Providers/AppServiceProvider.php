@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 use App\Models\Student; 
+use App\Models\Expense;
+use App\Observers\ExpenseObserver;
 use App\Observers\StudentObserver;
 use App\Models\ClassFee; 
 use App\Observers\ClassFeeObserver;
@@ -27,5 +29,6 @@ class AppServiceProvider extends ServiceProvider
         Student::observe(StudentObserver::class);
         ClassFee::observe(ClassFeeObserver::class);
         StudentExtraFee::observe(ExtraFeeAssignmentObserver::class);
+        Expense::observe(ExpenseObserver::class);
     }
 }

@@ -59,8 +59,8 @@
                       <li>
                         <a href="#" data-target="#expenses" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-diamond purple_color"></i> <span>Expenses</span></a>
                         <ul class="collapse list-unstyled" id="expenses">
-                           <li> <a href="{{ route('expense_categories.index') }}"> <span>Expenses</span></a></li>
-                           <li><a href="#"> <span>Expense Category</span></a></li>
+                           <li> <a href="{{ route('expenses.index') }}"> <span>Expenses</span></a></li>
+                           <li><a href="{{ route('expense_categories.index') }}"> <span>Expense Category</span></a></li>
                         </ul>
                      </li>
                      <!-- <li><a href="tables.html"><i class="fa fa-table purple_color2"></i> <span>Tables</span></a></li>

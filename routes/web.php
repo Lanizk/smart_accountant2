@@ -16,7 +16,7 @@ use App\Http\Controllers\TermController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\StatementController;
 use App\Http\Controllers\ExpenseCategoryController;
-
+use App\Http\Controllers\ExpenseController;
 
 Route::get('/register', [RegisterController::class, 'showRegistrationForm']);
 Route::post('/register', [RegisterController::class, 'register'])->name('register');
@@ -97,7 +97,7 @@ Route::prefix('invoices')->group(function () {
    
     Route::post('{invoice}/payments', [InvoiceController::class, 'storePayment'])->name('payments.store');
 });
-});
+
 
 
 
@@ -107,3 +107,11 @@ Route::post('/statements/bulk', [StatementController::class, 'bulk'])->name('sta
 
 Route::resource('expense_categories', ExpenseCategoryController::class);
 
+Route::get('expenses', [ExpenseController::class,'index'])->name('expenses.index');
+Route::get('expenses/create', [ExpenseController::class,'create'])->name('expenses.create');
+Route::post('expenses', [ExpenseController::class,'store'])->name('expenses.store');
+Route::put('expenses/{expense}', [ExpenseController::class,'update'])->name('expenses.update');
+Route::delete('expenses/{expense}', [ExpenseController::class,'destroy'])->name('expenses.destroy');
+Route::post('expenses/{id}/restore', [ExpenseController::class,'restore'])->name('expenses.restore');
+
+});
