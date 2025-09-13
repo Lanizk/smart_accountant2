@@ -17,6 +17,8 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\StatementController;
 use App\Http\Controllers\ExpenseCategoryController;
 use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\IncomeCategoryController;
+use App\Http\Controllers\OtherIncomeController;
 
 Route::get('/register', [RegisterController::class, 'showRegistrationForm']);
 Route::post('/register', [RegisterController::class, 'register'])->name('register');
@@ -109,9 +111,16 @@ Route::resource('expense_categories', ExpenseCategoryController::class);
 
 Route::get('expenses', [ExpenseController::class,'index'])->name('expenses.index');
 Route::get('expenses/create', [ExpenseController::class,'create'])->name('expenses.create');
+Route::get('expenses/{expense}/edit', [ExpenseController::class,'edit'])->name('expenses.edit');
+
 Route::post('expenses', [ExpenseController::class,'store'])->name('expenses.store');
 Route::put('expenses/{expense}', [ExpenseController::class,'update'])->name('expenses.update');
 Route::delete('expenses/{expense}', [ExpenseController::class,'destroy'])->name('expenses.destroy');
 Route::post('expenses/{id}/restore', [ExpenseController::class,'restore'])->name('expenses.restore');
+
+
+Route::resource('income_categories', IncomeCategoryController::class)->only(['index','store','update','destroy']);
+
+Route::resource('other_incomes', OtherIncomeController::class);
 
 });

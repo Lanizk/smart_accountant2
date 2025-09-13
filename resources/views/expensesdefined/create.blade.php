@@ -10,7 +10,7 @@
 </div>
 
 <div class="row w-100">
-    <div class="col-md-6">
+    <div class="col-md-12">
         <div class="white_shd full margin_bottom_30">
             <div class="full inner_elements">
                 <form action="{{ isset($expense) ? route('expenses.update', $expense->id) : route('expenses.store') }}" method="POST">

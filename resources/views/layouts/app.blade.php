@@ -59,10 +59,30 @@
                       <li>
                         <a href="#" data-target="#expenses" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-diamond purple_color"></i> <span>Expenses</span></a>
                         <ul class="collapse list-unstyled" id="expenses">
-                           <li> <a href="{{ route('expenses.index') }}"> <span>Expenses</span></a></li>
                            <li><a href="{{ route('expense_categories.index') }}"> <span>Expense Category</span></a></li>
+                           <li> <a href="{{ route('expenses.index') }}"> <span>Expenses</span></a></li>
+                           
                         </ul>
                      </li>
+
+                     <li>
+    <a href="#" data-target="#incomeMenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+        <i class="fa fa-money green_color"></i> <span>Income</span>
+    </a>
+    <ul class="collapse list-unstyled" id="incomeMenu">
+        <li>
+            <a href="{{ route('income_categories.index') }}">
+                <span>Income Categories</span>
+            </a>
+        </li>
+        <li>
+    <a href="{{ route('other_incomes.index') }}">
+        <span>Other Incomes</span>
+    </a>
+</li>
+    </ul>
+</li>
+
                      <!-- <li><a href="tables.html"><i class="fa fa-table purple_color2"></i> <span>Tables</span></a></li>
                      <li>
                         <a href="#apps" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-object-group blue2_color"></i> <span>Apps</span></a>

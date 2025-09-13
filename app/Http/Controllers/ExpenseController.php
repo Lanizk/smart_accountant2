@@ -7,27 +7,51 @@ use Illuminate\Http\Request;
 
 class ExpenseController extends Controller
 {
-    public function index()
-    {
-        $schoolId = auth()->user()->school_id;
-         
-        $expenses = Expense::where('school_id', $schoolId)->with('category')->latest()->paginate(20);
-         $categories = ExpenseCategory::all();
-        return view('expensesdefined.index', compact('expenses','categories'));
+   public function index(Request $request)
+{
+    $schoolId = auth()->user()->school_id;
+
+    // Start with a query builder — DO NOT call get()/paginate() yet
+    $query = Expense::with('category')
+                    ->where('school_id', $schoolId);
+
+    // Apply filters
+    if ($request->filled('category_id')) {
+        $query->where('expense_category_id', $request->category_id);
     }
 
-     public function create()
-{
+    if ($request->filled('payment_method')) {
+        $query->where('payment_method', $request->payment_method);
+    }
+
+    if ($request->filled('description')) {
+        $query->where('description', 'LIKE', '%' . $request->description . '%');
+    }
+
+    // Ordering and pagination happen last (latest() defaults to `created_at`)
+    // Use latest('expense_date') if you want to order by the expense_date column.
+    $expenses = $query->latest('expense_date')->paginate(20)->withQueryString();
+
     $categories = ExpenseCategory::all();
-    $expense = null; // 👈 very important
-    return view('expensesdefined.create', compact('categories', 'expense'));
+
+    return view('expensesdefined.index', compact('expenses','categories'));
 }
 
-public function edit(Expense $expense)
-{
-    $categories = ExpenseCategory::all();
-    return view('expensesdefined.create', compact('categories', 'expense'));
-}
+
+     public function create()
+     {
+         $categories = ExpenseCategory::all();
+         $expense = null; // 👈 very important
+         return view('expensesdefined.create', compact('categories', 'expense'));
+     }
+
+    public function edit(Expense $expense)
+    {
+        $categories = ExpenseCategory::all();
+        return view('expensesdefined.create', compact('categories', 'expense'));
+    }
+
+
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -44,13 +68,13 @@ public function edit(Expense $expense)
         // ExpenseObserver will create the original cashbook entry
         $expense = Expense::create($data);
 
-        return redirect()->back()->with('success', 'Expense recorded.');
+        return redirect()->route('expenses.index')->with('success', 'Expense recorded.');
     }
 
     public function update(Request $request, Expense $expense)
     {
         $this->authorize('update', $expense);
-
+         
         $data = $request->validate([
             'expense_category_id' => 'nullable|exists:expense_categories,id',
             'description' => 'nullable|string',
@@ -60,12 +84,12 @@ public function edit(Expense $expense)
         ]);
 
         $expense->update($data); // observer updates the original cashbook entry
-        return redirect()->back()->with('success', 'Expense updated.');
+        return redirect()->route('expenses.index')->with('success', 'Expense updated.');
     }
 
     public function destroy(Expense $expense)
     {
-        $this->authorize('delete', $expense);
+         $this->authorize('delete', $expense);
         $expense->delete(); // soft delete -> observer creates reversal
         return redirect()->back()->with('success', 'Expense deleted (reversed in cashbook).');
     }

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('expenses', function (Blueprint $table) {
-             $table->id();
+        $table->id();
         $table->unsignedBigInteger('school_id'); // tenant
         $table->unsignedBigInteger('expense_category_id')->nullable();
         $table->string('description')->nullable();
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('expense');
+        Schema::dropIfExists('expenses');
     }
 };

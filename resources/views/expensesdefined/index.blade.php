@@ -104,7 +104,7 @@
                             <td>{{ ucfirst($expense->payment_method) }}</td>
                             <td>{{ $expense->expense_date?->format('d-M-Y') }}</td>
                             <td style="min-width: 150px;">
-                                <a href="{{ route('expenses.create', $expense->id) }}" class="btn btn-primary btn-sm">Edit</a>
+                                <a href="{{ route('expenses.edit', $expense->id) }}" class="btn btn-primary btn-sm">Edit</a>
 
                                 @if($expense->deleted_at)
                                     <form action="{{ route('expenses.restore', $expense->id) }}" method="POST" class="d-inline">
