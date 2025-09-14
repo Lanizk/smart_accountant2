@@ -11,8 +11,8 @@ class IncomeCategory extends Model
 
     protected $fillable = [
          'school_id',
-        'name',
-        'description',
+         'name',
+         'description',
     ];
 
     public function incomes()

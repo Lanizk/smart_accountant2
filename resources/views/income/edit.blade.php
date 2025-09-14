@@ -25,7 +25,7 @@
         <div class="white_shd full margin_bottom_30">
             <div class="full graph_head"><h2 class="heading1">Update Income Details</h2></div>
             <div class="full inner_elements">
-                <form action="{{ route('other_incomes.update', $income->id) }}" method="POST">
+                <form action="{{ route('other_incomes.update', $other_income->id) }}" method="POST">
                     @csrf
                     @method('PUT')
 
@@ -34,7 +34,7 @@
                         <select name="income_category_id" class="form-control" required>
                             <option value="">-- Select Category --</option>
                             @foreach($categories as $cat)
-                                <option value="{{ $cat->id }}" {{ $income->income_category_id == $cat->id ? 'selected' : '' }}>
+                                <option value="{{ $cat->id }}" {{ $other_income->income_category_id == $cat->id ? 'selected' : '' }}>
                                     {{ $cat->name }}
                                 </option>
                             @endforeach
@@ -43,27 +43,27 @@
 
                     <div class="form-group mb-3">
                         <label>Amount</label>
-                        <input type="number" name="amount" class="form-control" step="0.01" required value="{{ $income->amount }}">
+                        <input type="number" name="amount" class="form-control" step="0.01" required value="{{ $other_income->amount }}">
                     </div>
 
                     <div class="form-group mb-3">
                         <label>Payment Method</label>
                         <select name="payment_method" class="form-control">
                             <option value="">-- Select Payment Method --</option>
-                            <option value="cash" {{ $income->payment_method=='cash' ? 'selected' : '' }}>Cash</option>
-                            <option value="mpesa" {{ $income->payment_method=='mpesa' ? 'selected' : '' }}>M-Pesa</option>
-                            <option value="bank" {{ $income->payment_method=='bank' ? 'selected' : '' }}>Bank</option>
+                            <option value="cash" {{ $other_income->payment_method=='cash' ? 'selected' : '' }}>Cash</option>
+                            <option value="mpesa" {{ $other_income->payment_method=='mpesa' ? 'selected' : '' }}>M-Pesa</option>
+                            <option value="bank" {{ $other_income->payment_method=='bank' ? 'selected' : '' }}>Bank</option>
                         </select>
                     </div>
 
                     <div class="form-group mb-3">
                         <label>Date</label>
-                        <input type="date" name="income_date" class="form-control" value="{{ $income->income_date }}">
+                        <input type="date" name="income_date" class="form-control" value="{{ $other_income->income_date }}">
                     </div>
 
                     <div class="form-group mb-3">
                         <label>Description</label>
-                        <textarea name="description" class="form-control" rows="3">{{ $income->description }}</textarea>
+                        <textarea name="description" class="form-control" rows="3">{{ $other_income->description }}</textarea>
                     </div>
 
                     <div class="form-group">

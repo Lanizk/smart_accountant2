@@ -19,6 +19,8 @@ use App\Http\Controllers\ExpenseCategoryController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\IncomeCategoryController;
 use App\Http\Controllers\OtherIncomeController;
+use App\Http\Controllers\CashbookController;
+
 
 Route::get('/register', [RegisterController::class, 'showRegistrationForm']);
 Route::post('/register', [RegisterController::class, 'register'])->name('register');
@@ -122,5 +124,7 @@ Route::post('expenses/{id}/restore', [ExpenseController::class,'restore'])->name
 Route::resource('income_categories', IncomeCategoryController::class)->only(['index','store','update','destroy']);
 
 Route::resource('other_incomes', OtherIncomeController::class);
+
+Route::get('/cashbook', [CashbookController::class, 'index'])->name('cashbook.index');
 
 });

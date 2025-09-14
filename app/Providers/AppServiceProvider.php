@@ -12,6 +12,8 @@ use App\Observers\ExtraFeeAssignmentObserver;
 use Illuminate\Support\ServiceProvider;
 use App\Models\OtherIncome;
 use App\Observers\OtherIncomeObserver;
+use App\Models\InvoicePayment;
+use App\Observers\InvoicePaymentObserver;
 
 
 class AppServiceProvider extends ServiceProvider
@@ -34,5 +36,6 @@ class AppServiceProvider extends ServiceProvider
         StudentExtraFee::observe(ExtraFeeAssignmentObserver::class);
         Expense::observe(ExpenseObserver::class);
         OtherIncome::observe(OtherIncomeObserver::class);
+        InvoicePayment::observe(InvoicePaymentObserver::class);
     }
 }
