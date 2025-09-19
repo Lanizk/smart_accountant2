@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('terms', function (Blueprint $table) {
             $table->id();
+            
             $table->string('name'); 
             $table->year('year'); 
             $table->date('start_date');
@@ -20,6 +21,11 @@ return new class extends Migration
             $table->boolean('active')->default(false); 
             $table->softDeletes();
             $table->timestamps();
+
+
+
+            $table->unique([ 'name', 'year']);
+
         });
     }
 

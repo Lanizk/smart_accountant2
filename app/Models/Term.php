@@ -38,4 +38,26 @@ class Term extends Model
 
         return $this->hasMany(ClassFee::class);
     }
+
+
+    public static function current()
+    {
+        $schoolId = auth()->user()->school_id;
+
+        return self::where('school_id', $schoolId)
+            ->where('active', true)
+            ->first();
+    }
+
+    public static function currentId()
+    {
+        return optional(self::current())->id;
+    }
+
+    // Get current year value
+    public static function currentYear()
+    {
+        $term = self::current();
+        return $term ? $term->year : now()->year; // fallback to this year
+    }
 }

@@ -9,57 +9,101 @@ use Illuminate\Http\Request;
 class TermController extends Controller
 {
     
-    public function listTerm(){
+      public function listTerm()
+    {
+        $data['getRecord'] = Term::where('school_id', auth()->user()->school_id)
+            ->orderBy('year', 'desc')
+            ->orderBy('start_date', 'desc')
+            ->get();
 
-        $data['getRecord']=Term::getRecord();
-        return view('term.list',$data);
-    } 
+        return view('term.list', $data);
+    }
 
     public function addTerm(){
           
         return view('term.add');
     }
 
-    public function insertTerm( Request $request){
-      
-        $schoolId=auth()->user()->school_id;
+     public function insertTerm(Request $request)
+    {
+        $schoolId = auth()->user()->school_id;
 
-        $save=new Term;
-        $save->school_id=$schoolId;
-        $save->name=$request->name;
-        $save->start_date=$request->start_date;
-        $save->end_date=$request->end_date;
-        $save->year=$request->year;
+      
+        $request->validate([
+            'name'       => 'required|string|max:50',
+            'year'       => 'required|digits:4|integer',
+            'start_date' => 'required|date',
+            'end_date'   => 'nullable|date|after_or_equal:start_date',
+            'active'     => 'nullable|boolean',
+        ]);
+
+        $exists = Term::where('school_id', $schoolId)
+        ->where('name', $request->name)
+        ->where('year', $request->year)
+        ->exists();
+
+    if ($exists) {
+        return redirect()->back()
+            ->withInput()
+            ->with('error', 'A term with this name and year already exists.');
+    }
+
+       
+        if ($request->active) {
+            Term::where('school_id', $schoolId)->update(['active' => false]);
+        }
+
+        $save = new Term;
+        $save->school_id  = $schoolId;
+        $save->name       = $request->name;
+        $save->year       = $request->year;
+        $save->start_date = $request->start_date;
+        $save->end_date   = $request->end_date;
+        $save->active     = $request->active ?? false;
         $save->save();
 
-        return redirect()->route('termlist')->with('success','Term Created Succesfully');
-
+        return redirect()->route('termlist')->with('success', 'Term Created Successfully');
     }
 
 
     public function editTerm($id,Request $request){
 
-        $schoolId=auth()->user()->school_id;
+        $schoolId = auth()->user()->school_id;
 
-        $save=Term::getSingle($id);
-        $save->name=$request->name;
-        $save->year=$request->year;
-        $save->save();
+        $term = Term::where('id', $id)->where('school_id', $schoolId)->firstOrFail();
 
-         return redirect()->route('termlist')->with('success','Term Updated Succesfully');
+        // ✅ Validation
+        $request->validate([
+            'name'       => 'required|string|max:50',
+            'year'       => 'required|digits:4|integer',
+            'start_date' => 'required|date',
+            'end_date'   => 'nullable|date|after_or_equal:start_date',
+            'active'     => 'nullable|boolean',
+        ]);
 
+        // ✅ If this term is set active, deactivate others
+        if ($request->active) {
+            Term::where('school_id', $schoolId)
+                ->where('id', '!=', $id)
+                ->update(['active' => false]);
+        }
 
+        $term->name       = $request->name;
+        $term->year       = $request->year;
+        $term->start_date = $request->start_date;
+        $term->end_date   = $request->end_date;
+        $term->active    = $request->active ?? false;
+        $term->save();
+
+        return redirect()->route('termlist')->with('success', 'Term Updated Successfully');
     }
 
-
     public function updateTerm($id,Request $request){
-           $schoolId=auth()->user()->school_id;
+           $schoolId = auth()->user()->school_id;
 
-           $data['getRecord']=Term::getSingle($id);
-           if(!empty($data['getRecord'])){
+           $data['getRecord'] = Term::where('id', $id)->where('school_id', $schoolId)->firstOrFail();
 
-            return view('term.edit',$data);
-           }
+           return view('term.edit', $data);
 
     }
 

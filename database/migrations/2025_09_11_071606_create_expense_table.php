@@ -19,6 +19,8 @@ return new class extends Migration
         $table->decimal('amount', 15, 2);
         $table->string('payment_method')->nullable(); // cash, mpesa, bank...
         $table->date('expense_date')->nullable();
+        $table->foreignId('term_id')->constrained('terms')->onDelete('cascade');
+        $table->Year('year');
         $table->unsignedBigInteger('created_by')->nullable();
         $table->timestamps();
         $table->softDeletes();

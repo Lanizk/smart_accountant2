@@ -17,6 +17,7 @@ return new class extends Migration
             $table->decimal('amount', 10, 2);
             $table->string('method')->nullable(); // e.g. Mpesa, Bank, Cash
             $table->date('payment_date')->default(now());
+            
             $table->timestamps();
         });
     }

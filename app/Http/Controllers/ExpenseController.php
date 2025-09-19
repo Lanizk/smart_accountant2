@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Expense;
+use App\Models\Term;
 use App\Models\ExpenseCategory;
 use Illuminate\Http\Request;
 
@@ -28,8 +29,6 @@ class ExpenseController extends Controller
         $query->where('description', 'LIKE', '%' . $request->description . '%');
     }
 
-    // Ordering and pagination happen last (latest() defaults to `created_at`)
-    // Use latest('expense_date') if you want to order by the expense_date column.
     $expenses = $query->latest('expense_date')->paginate(20)->withQueryString();
 
     $categories = ExpenseCategory::all();
@@ -41,14 +40,16 @@ class ExpenseController extends Controller
      public function create()
      {
          $categories = ExpenseCategory::all();
-         $expense = null; // 👈 very important
-         return view('expensesdefined.create', compact('categories', 'expense'));
+         $expense = null; 
+         $terms=Term::where('school_id', auth()->user()->school_id)->get();
+         return view('expensesdefined.create', compact('categories', 'expense','terms'));
      }
 
     public function edit(Expense $expense)
     {
         $categories = ExpenseCategory::all();
-        return view('expensesdefined.create', compact('categories', 'expense'));
+        $terms=Term::where('school_id', auth()->user()->school_id)->get();
+        return view('expensesdefined.create', compact('categories', 'expense','terms'));
     }
 
 
@@ -60,8 +61,11 @@ class ExpenseController extends Controller
             'amount' => 'required|numeric|min:0.01',
             'payment_method' => 'nullable|string',
             'expense_date' => 'nullable|date',
+            'term_id'=>'required|exists:terms,id',
+            
         ]);
-
+        $term=Term::findOrFail($data['term_id']);
+        $data['year']=$term->year;
         $data['school_id'] = auth()->user()->school_id;
         $data['created_by'] = auth()->id();
 
@@ -81,6 +85,8 @@ class ExpenseController extends Controller
             'amount' => 'required|numeric|min:0.01',
             'payment_method' => 'nullable|string',
             'expense_date' => 'nullable|date',
+            'term_id'=>'required|exists:terms,id',
+            'year'=>'required|digits:4|integer',
         ]);
 
         $expense->update($data); // observer updates the original cashbook entry

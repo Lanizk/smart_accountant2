@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Models\OtherIncome;
 use App\Models\IncomeCategory;
+use App\Models\Term;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,7 +21,8 @@ class OtherIncomeController extends Controller
     public function create()
     {
         $categories = IncomeCategory::where('school_id', auth()->user()->school_id)->get();
-        return view('income.create', compact('categories'));
+        $terms =Term::where('school_id', auth()->user()->school_id)->get();
+        return view('income.create', compact('categories','terms'));
     }
 
     public function store(Request $request)
@@ -30,7 +32,11 @@ class OtherIncomeController extends Controller
             'amount' => 'required|numeric|min:0',
             'payment_method' => 'required|string',
             'income_date' => 'required|date',
+            'term_id'=>'required|exists:terms,id',
+            
         ]);
+
+        $term = Term::findOrFail($request->term_id);
 
         OtherIncome::create([
             'school_id' => auth()->user()->school_id,
@@ -38,6 +44,9 @@ class OtherIncomeController extends Controller
             'amount' => $request->amount,
             'payment_method' => $request->payment_method,
             'income_date' => $request->income_date,
+            'term_id'=>$request->term_id,
+
+            'year' => $term->year, 
             'description' => $request->description,
             'created_by' => Auth::id(),
         ]);
@@ -64,12 +73,17 @@ class OtherIncomeController extends Controller
             'income_date' => 'required|date',
         ]);
 
+        $term = Term::findOrFail($request->term_id);
+
         $other_income->update([
             'income_category_id' => $request->income_category_id,
             'amount' => $request->amount,
             'payment_method' => $request->payment_method,
             'income_date' => $request->income_date,
+            'term_id' => $request->term_id,
+             'year' => $term->year, 
             'description' => $request->description,
+            'created_by' => Auth::id(),
         ]);
 
         return redirect()->route('other_incomes.index')->with('success', 'Income updated successfully!');

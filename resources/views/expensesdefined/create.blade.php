@@ -1,6 +1,10 @@
 @extends('layouts.app')
 @section('main')
 
+
+
+
+
 <div class="row column_title">
     <div class="col-md-12">
         <div class="page_title">
@@ -8,6 +12,16 @@
         </div>
     </div>
 </div>
+
+@if($errors->any())
+  <div class="alert alert-danger">
+      <ul class="mb-0">
+          @foreach($errors->all() as $error)
+              <li>{{ $error }}</li>
+          @endforeach
+      </ul>
+  </div>
+@endif
 
 <div class="row w-100">
     <div class="col-md-12">
@@ -64,6 +78,18 @@
                                value="{{ optional($expense)->expense_date?->format('Y-m-d') ?? old('expense_date') }}">
                         @error('expense_date')<small class="text-danger">{{ $message }}</small>@enderror
                     </div>
+                    <div class="mb-3">
+                        <label for="term_id" class="form-label">Term</label>
+                        <select name="term_id" id="term_id" class="form-control" required>
+                            <option value="">-- Select Term --</option>
+                            @foreach($terms as $term)
+                                <option value="{{ $term->id }}"
+                                    {{ (isset($expense) && $expense->term_id == $term->id) ? 'selected' : '' }}>
+                                    {{ $term->name }} ({{ $term->year }})
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('term_id')<small class="text-danger">{{ $message }}</small>@enderror
 
                     <div class="mb-3">
                         <button type="submit" class="btn btn-success">{{ isset($expense) ? 'Update' : 'Save' }}</button>

@@ -1,6 +1,18 @@
 @extends('layouts.app')
 @section('main')
 
+@if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
+@if (session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
+
 <div class="row">
     <!-- Form Section -->
     <div class="col-md-12 mt-5">
@@ -30,6 +42,15 @@
                         <label for="term_year">Term Year:</label>
                         <input type="text" id="term_year" name="year" class="form-control" required>
                     </div>
+
+                     <div class="form-group">
+                           <label for="active">Status:</label>
+                           <select id="active" name="active" class="form-control" required>
+                               <option value="">-- Select Status --</option>
+                               <option value="1">Active</option>
+                               <option value="0">Inactive</option>
+                           </select>
+                      </div>
 
                    
 

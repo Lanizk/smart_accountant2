@@ -15,6 +15,8 @@ class Expense extends Model
         'amount',
         'payment_method',
         'expense_date',
+        'term_id',
+        'year',
         'created_by',
     ];
 

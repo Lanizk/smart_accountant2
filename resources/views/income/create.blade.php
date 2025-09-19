@@ -58,6 +58,17 @@
                         <label>Date</label>
                         <input type="date" name="income_date" class="form-control" value="{{ old('income_date', date('Y-m-d')) }}">
                     </div>
+                    <div class="form-group mb-3">
+                        <label>Term</label>
+                        <select name="term_id" class="form-control" required>
+                            <option value="">-- Select Term --</option>
+                            @foreach($terms as $term)
+                                <option value="{{ $term->id }}" {{ old('term_id') == $term->id ? 'selected' : '' }}>
+                                    {{ $term->name }} ({{ $term->year }})
+                                </option>
+                            @endforeach
+                        </select>
+</div>
 
                     <div class="form-group mb-3">
                         <label>Description</label>

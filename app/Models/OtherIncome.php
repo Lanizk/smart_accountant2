@@ -16,6 +16,8 @@ class OtherIncome extends Model
         'amount',
         'payment_method',
         'income_date',
+        'term_id',
+        'year',
         'created_by',
     ];
 
