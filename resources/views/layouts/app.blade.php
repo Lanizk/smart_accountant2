@@ -15,7 +15,7 @@
                   <div class="user_profle_side">
                      <div class="user_img"><img class="img-responsive" src="/images/layout_img/user_img.jpg" alt="#" /></div>
                      <div class="user_info">
-                        <h6>Kenyatta Primary</h6>
+                        <h6>{{ auth()->user()->school->school_name }}</h6>
                         <p><span class="online_animation"></span> Online</p>
                      </div>
                   </div>
@@ -137,7 +137,7 @@
                      <div class="logo_section">
                         <a href="index.html"><img class="img-responsive" src="/images/logo/logo.png" alt="#" /></a>
                      </div>
-                     <div class="right_topbar">
+                     <!-- <div class="right_topbar">
                         <div class="icon_info">
                            <ul>
                               <li><a href="#"><i class="fa fa-bell-o"></i><span class="badge">2</span></a></li>
@@ -155,8 +155,8 @@
                                  </div>
                               </li>
                            </ul>
-                        </div>
-                     </div>
+                        </div> -->
+                     <!-- </div> -->
                   </div>
                </nav>
             </div>

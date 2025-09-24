@@ -51,5 +51,12 @@ class User extends Authenticatable
         ];
     }
 
+
+
+    public function school()
+    {
+        return $this->belongsTo(Schools::class);
+    }
+
    
 }
