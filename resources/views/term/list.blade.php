@@ -13,24 +13,20 @@
     </div>
 @endif
 
-<div class="row column_title">
-    <div class="col-md-12">
-        <div class="col-md-12">
-            <div class="d-flex justify-content-end align-items-center py-3 px-4 white_shd border rounded mb-3 mt-3">
-                <a href="{{ route('addterm') }}" class="btn btn-success px-4 py-2 fw-bold">+ Add New</a>
-            </div>
-        </div>
-    </div>
-</div>
 
-<div class="row w-100">
+
+<div class="row w-500 mt-4">
     <div class="col-md-12">
         <div class="white_shd full margin_bottom_30">
-            <div class="full graph_head">
+            <div class="full graph_head d-flex justify-content-between ">
                 <div class="heading1 margin_0">
-                    <h2>Term List</h2>
-                </div>
-            </div>
+        <h2 >Term List</h2>  
+    </div> 
+    <a href="{{ route('addterm') }}" class="btn btn-success fw-bold px-4 py-2">
+        + Add Term
+    </a>
+</div>
+
             
             <div class="table-responsive-lg">
                 <table class="table">

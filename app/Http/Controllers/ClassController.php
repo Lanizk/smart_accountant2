@@ -18,17 +18,28 @@ class ClassController extends Controller
         return view('class.add');
     }
 
-    public function insert(Request $request){
+    public function insert(Request $request)
+{
+    $schoolId = auth()->user()->school_id; 
 
-        $schoolId = auth()->user()->school_id; 
+    // Validate input
+    $request->validate([
+        'name' => 'required|array',
+        'name.*' => 'required|string|max:255',
+    ]);
 
-        $save=new Classes;
-        $save->name=$request->name;
+    // Loop through all names
+    foreach ($request->name as $className) {
+        $save = new Classes();
+        $save->name = $className;
         $save->school_id = $schoolId;
         $save->save();
-        return redirect()->route('classlist')->with('success', "Class successfully Created");
-
     }
+
+    return redirect()->route('classlist')
+        ->with('success', "Classes successfully created");
+}
+
 
 
     public function edit($id,Request $request){

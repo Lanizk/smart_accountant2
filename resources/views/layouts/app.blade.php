@@ -21,108 +21,93 @@
                   </div>
                </div>
             </div>
-            <div class="sidebar_blog_2">
-               <h4>General</h4>
-               <ul class="list-unstyled components">
-                  <li>
-                     <a href="{{url('/dashboard')}}" class="nav-link  @if (Request::segment(2) == 'dashboard') active 
-                        @endif">
-                     <i class="fa fa-dashboard yellow_color"></i> <span>Dashboard</span></a>
-                  </li>
-                  <li>
-                     <a href="{{url('/student')}}" class="nav-link  @if (Request::segment(2) == 'student') active 
-                        @endif">
-                     <i class="fa fa-clock-o orange_color"></i> <span>Students</span></a>
-                  </li>
-                  <li>
-                     <a href="#" data-target="#element" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-diamond purple_color"></i> <span>Level</span></a>
-                     <ul class="collapse list-unstyled" id="element">
-                        <li><a href="/class"> <span>Class Level</span></a></li>
-                        <li><a href="/term"> <span>Term Level</span></a></li>
-                     </ul>
-                  </li>
-                  <li>
-                     <a href="#" data-target="#fee" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-diamond purple_color"></i> <span>Fee Module</span></a>
-                     <ul class="collapse list-unstyled" id="fee">
-                        <li><a href="/classfee"> <span>Class Fee</span></a></li>
-                        <li><a href="/extrafee"> <span>Extra Fee</span></a></li>
-                        <li><a href="/listextrafeestudents"> <span>Assign Extra Fee</span></a></li>
-                        <li><a href="/invoices"> <span>Fee Agregate List</span></a></li>
-                        <li><a href="/try"> <span>Try</span></a></li>
-                     </ul>
-                  </li>
-                  <li>
-                     <a href="#" data-target="#expenses" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-diamond purple_color"></i> <span>Expenses</span></a>
-                     <ul class="collapse list-unstyled" id="expenses">
-                        <li><a href="{{ route('expense_categories.index') }}"> <span>Expense Category</span></a></li>
-                        <li> <a href="{{ route('expenses.index') }}"> <span>Expenses</span></a></li>
-                     </ul>
-                  </li>
-                  <li>
-                     <a href="#" data-target="#incomeMenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                     <i class="fa fa-money green_color"></i> <span>Income</span>
-                     </a>
-                     <ul class="collapse list-unstyled" id="incomeMenu">
-                        <li>
-                           <a href="{{ route('income_categories.index') }}">
-                           <span>Income Categories</span>
-                           </a>
-                        </li>
-                        <li>
-                           <a href="{{ route('other_incomes.index') }}">
-                           <span>Other Incomes</span>
-                           </a>
-                        </li>
-                     </ul>
-                  </li>
+           <div class="sidebar_blog_2">
+    <h4>General</h4>
+    <ul class="list-unstyled components">
+        <!-- Dashboard -->
+        <li>
+            <a href="{{ url('/dashboard') }}" 
+               class="nav-link @if (Request::segment(2) == 'dashboard') active @endif">
+               <i class="fa fa-tachometer blue_color"></i> 
+               <span>Dashboard</span>
+            </a>
+        </li>
 
-                 <li>
-                       <a href="#cashbook" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                           <i class="fa fa-book green_color"></i> <span>Cashbook</span>
-                       </a>
-                       <ul class="collapse list-unstyled" id="cashbook">
-                           <li>
-                               <a href="{{ route('cashbook.index') }}">
-                                   <span>Cashbook Entries</span>
-                               </a>
-                           </li>
-                       </ul>
-                   </li>
+        <!-- Levels -->
+        <li>
+            <a href="#levelMenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+               <i class="fa fa-graduation-cap purple_color"></i> 
+               <span>Levels</span>
+            </a>
+            <ul class="collapse list-unstyled" id="levelMenu">
+                <li><a href="/class"><span>Class Levels</span></a></li>
+                <li><a href="/term"><span>Term Levels</span></a></li>
+            </ul>
+        </li>
 
-                  <!-- <li><a href="tables.html"><i class="fa fa-table purple_color2"></i> <span>Tables</span></a></li>
-                     <li>
-                        <a href="#apps" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-object-group blue2_color"></i> <span>Apps</span></a>
-                        <ul class="collapse list-unstyled" id="apps">
-                           <li><a href="email.html">> <span>Email</span></a></li>
-                           <li><a href="calendar.html">> <span>Calendar</span></a></li>
-                           <li><a href="media_gallery.html">> <span>Media Gallery</span></a></li>
-                        </ul>
-                     </li>
-                     <li><a href="price.html"><i class="fa fa-briefcase blue1_color"></i> <span>Pricing Tables</span></a></li>
-                     <li>
-                        <a href="contact.html">
-                        <i class="fa fa-paper-plane red_color"></i> <span>Contact</span></a>
-                     </li>
-                     <li class="active">
-                        <a href="#additional_page" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-clone yellow_color"></i> <span>Additional Pages</span></a>
-                        <ul class="collapse list-unstyled" id="additional_page">
-                           <li>
-                              <a href="profile.html">> <span>Profile</span></a>
-                           </li>
-                           <li>
-                              <a href="project.html">> <span>Projects</span></a>
-                           </li>
-                           <li>
-                              <a href="login.html">> <span>Login</span></a>
-                           </li>
-                           <li>
-                              <a href="404_error.html">> <span>404 Error</span></a>
-                           </li>
-                        </ul>
-                     </li>
-                     <li><a href="map.html"><i class="fa fa-map purple_color2"></i> <span>Map</span></a></li>
-                     <li><a href="charts.html"><i class="fa fa-bar-chart-o green_color"></i> <span>Charts</span></a></li>
-                     <li><a href="settings.html"><i class="fa fa-cog yellow_color"></i> <span>Settings</span></a></li> -->
+        <!-- Students -->
+        <li>
+            <a href="{{ url('/student') }}" 
+               class="nav-link @if (Request::segment(2) == 'student') active @endif">
+               <i class="fa fa-users orange_color"></i> 
+               <span>Students</span>
+            </a>
+        </li>
+
+        <!-- Fee Module -->
+        <li>
+            <a href="#feeMenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+               <i class="fa fa-credit-card-alt red_color"></i> 
+               <span>Fees</span>
+            </a>
+            <ul class="collapse list-unstyled" id="feeMenu">
+                <li><a href="/classfee"><span>Class Fees</span></a></li>
+                <li><a href="/extrafee"><span>Extra Fees</span></a></li>
+                <li><a href="/listextrafeestudents"><span>Assign Extra Fees</span></a></li>
+                <li><a href="/invoices"><span>Fee Summary</span></a></li>
+                <li><a href="/try"><span>Trial</span></a></li>
+            </ul>
+        </li>
+
+        <!-- Expenses -->
+        <li>
+            <a href="#expensesMenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+               <i class="fa fa-shopping-cart purple_color"></i> 
+               <span>Expenses</span>
+            </a>
+            <ul class="collapse list-unstyled" id="expensesMenu">
+                <li><a href="{{ route('expense_categories.index') }}"><span>Expense Categories</span></a></li>
+                <li><a href="{{ route('expenses.index') }}"><span>All Expenses</span></a></li>
+            </ul>
+        </li>
+
+        <!-- Income -->
+        <li>
+            <a href="#incomeMenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+               <i class="fa fa-line-chart green_color"></i> 
+               <span>Income</span>
+            </a>
+            <ul class="collapse list-unstyled" id="incomeMenu">
+                <li><a href="{{ route('income_categories.index') }}"><span>Income Categories</span></a></li>
+                <li><a href="{{ route('other_incomes.index') }}"><span>Other Income</span></a></li>
+            </ul>
+        </li>
+
+        <!-- Cashbook -->
+        <li>
+            <a href="#cashbookMenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+               <i class="fa fa-book blue_color"></i> 
+               <span>Cashbook</span>
+            </a>
+            <ul class="collapse list-unstyled" id="cashbookMenu">
+                <li><a href="{{ route('cashbook.index') }}"><span>Cashbook Entries</span></a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+
+                  
                </ul>
             </div>
          </nav>
