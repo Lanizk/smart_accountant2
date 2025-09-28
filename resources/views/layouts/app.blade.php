@@ -103,6 +103,16 @@
                 <li><a href="{{ route('cashbook.index') }}"><span>Cashbook Entries</span></a></li>
             </ul>
         </li>
+
+        <li>
+            <a href="#paymentchannellMenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+               <i class="fa fa-book blue_color"></i> 
+               <span>Settings</span>
+            </a>
+            <ul class="collapse list-unstyled" id="paymentchannellMenu">
+                <li><a href="{{ route('payment_channels.index') }}"><span>Payment Channels</span></a></li>
+            </ul>
+        </li>
     </ul>
 </div>
 

@@ -20,7 +20,7 @@ use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\IncomeCategoryController;
 use App\Http\Controllers\OtherIncomeController;
 use App\Http\Controllers\CashbookController;
-
+use App\Http\Controllers\paymentChannelController;
 
 Route::get('/register', [RegisterController::class, 'showRegistrationForm']);
 Route::post('/register', [RegisterController::class, 'register'])->name('register');
@@ -126,5 +126,16 @@ Route::resource('income_categories', IncomeCategoryController::class)->only(['in
 Route::resource('other_incomes', OtherIncomeController::class);
 
 Route::get('/cashbook', [CashbookController::class, 'index'])->name('cashbook.index');
+
+
+
+
+    
+
+    Route::get('/payment_channels', [PaymentChannelController::class, 'index'])->name('payment_channels.index');
+    Route::post('/payment_channels', [PaymentChannelController::class, 'store'])->name('payment_channels.store');
+    Route::put('/payment_channels/{id}', [PaymentChannelController::class, 'update'])->name('payment_channels.update');
+    Route::get('/payment_channels/{id}/deactivate', [PaymentChannelController::class, 'deactivate'])->name('payment_channels.deactivate');
+    Route::get('/payment_channels/{id}/activate', [PaymentChannelController::class, 'activate'])->name('payment_channels.activate');
 
 });
