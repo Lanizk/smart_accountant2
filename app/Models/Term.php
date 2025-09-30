@@ -49,6 +49,15 @@ class Term extends Model
             ->first();
     }
 
+    public static function current1($schoolId)
+{
+    return self::where('school_id', $schoolId)
+        ->where('active', 1) // integer instead of boolean
+        ->first();
+}
+
+
+
     public static function currentId()
     {
         return optional(self::current())->id;

@@ -14,6 +14,14 @@ return [
     |
     */
 
+    'mpesa' => [
+    'consumer_key' => env('MPESA_CONSUMER_KEY'),
+    'consumer_secret' => env('MPESA_CONSUMER_SECRET'),
+    'shortcode' => env('MPESA_SHORTCODE'),
+    'env' => env('MPESA_ENV', 'sandbox'),
+],
+
+
     'postmark' => [
         'token' => env('POSTMARK_TOKEN'),
     ],
