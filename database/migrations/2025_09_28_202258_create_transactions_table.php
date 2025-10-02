@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
              // link to student & invoice
+            $table->foreignId('school_id')->nullable()->constrained()->onDelete('cascade');
             $table->foreignId('student_id')->nullable()->constrained()->onDelete('cascade');
             $table->foreignId('invoice_id')->nullable()->constrained()->onDelete('cascade');
 
