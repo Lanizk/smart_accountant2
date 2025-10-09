@@ -15,6 +15,7 @@ class studentController extends Controller
         $data['getRecord']=Student::getRecord($request);
         $data['classes'] = Classes::all();
         $data['terms'] = Term::all(); 
+         $data['getRecord'] = Student::paginate(10);
         return view('student.list',$data);
     }
 

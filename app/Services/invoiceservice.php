@@ -36,6 +36,7 @@ class InvoiceService
             'description' => "Class Fee: {$student->class->name}",
             'amount'      => $classFee->amount,
         ]);
+        $invoice->base_fee = $classFee->amount;   // ✅ new field
         $total += $classFee->amount;
     }
 
@@ -55,25 +56,43 @@ class InvoiceService
         $total += $amount;
     }
 
-    // 3. Add Previous Balance (carry over)
-    if ($student->prev_balance > 0) {
-        $invoice->items()->create([
-            'term_id'     => $termId,
-            'description' => "Previous Balance",
-            'amount'      => $student->prev_balance,
-        ]);
-        $total += $student->prev_balance;
+    // 3. Add Previous Balance (carry over automatically)
+    $previousInvoice = Invoice::where('student_id', $student->id)
+        ->where('term_id', '<', $termId)
+        ->orderByDesc('term_id')
+        ->first();
+
+    if ($previousInvoice) {
+        $balance = $previousInvoice->total_amount - $previousInvoice->amount_paid;
+
+        if ($balance > 0) {
+            $invoice->items()->create([
+                'term_id'     => $termId,
+                'description' => "Balance B/F",
+                'amount'      => $balance,
+            ]);
+            $invoice->balance_forward = $balance; // ✅ new field
+            $total += $balance;
+        } elseif ($balance < 0) {
+            $invoice->items()->create([
+                'term_id'     => $termId,
+                'description' => "Credit B/F",
+                'amount'      => $balance,
+            ]);
+            $invoice->credit_forward = abs($balance); // ✅ new field
+            $total += $balance;
+        }
     }
 
     // Update totals
-    $invoice->update([
-        'total_amount' => $total,
-        'balance'      => $total - $invoice->amount_paid,
-        'status'       => $this->calculateStatus($invoice),
-    ]);
+    $invoice->total_amount = $total;
+    $invoice->balance = $total - $invoice->amount_paid;
+    $invoice->status = $this->calculateStatus($invoice);
+    $invoice->save();
 
     return $invoice->fresh(); // force reload to avoid stale cache
 }
+
 
       public function paymentMade(Invoice $invoice, $amount,$method)
     {
